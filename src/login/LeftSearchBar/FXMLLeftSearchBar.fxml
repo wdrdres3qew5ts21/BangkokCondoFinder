@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="leftSearchBar" prefHeight="329.0" prefWidth="200.0" style="-fx-background-color: #c64c23;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LeftSearchBar.FXMLLeftSearchBarController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.66663360595703" minWidth="10.0" prefWidth="92.99997965494792" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.33335367838542" minWidth="10.0" prefWidth="106.33335367838542" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="78.33333333333333" minHeight="3.3333269357681274" prefHeight="33.666676839192704" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="111.66667306423187" minHeight="5.666666666666671" prefHeight="38.00002034505209" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="181.999994913737" minHeight="10.0" prefHeight="41.00001017252603" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="169.66666412353516" minHeight="10.0" prefHeight="40.66668701171875" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="152.99998474121094" minHeight="10.0" prefHeight="44.00002034505209" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="138.00001525878906" minHeight="10.0" prefHeight="37.33332316080728" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="156.0" minHeight="10.0" prefHeight="97.33334350585935" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label prefHeight="17.0" prefWidth="187.0" text="SEARCH FOR PROPERY" textFill="#fcf9f9" GridPane.columnSpan="2">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Label prefHeight="52.0" prefWidth="83.0" text="CHOOSE AREA" textFill="#f5f0f0" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Label prefHeight="17.0" prefWidth="89.0" text="AREA BY METRO" textFill="#f7f6f6" GridPane.columnSpan="2" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Label prefHeight="17.0" prefWidth="105.0" text="PROPERTY TYPE" textFill="#f0eded" GridPane.columnSpan="2" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Label prefHeight="17.0" prefWidth="111.0" text="BEDROOMS" textFill="#fcfafa" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(150, 51, 18);" GridPane.columnSpan="2" GridPane.rowIndex="6">
+         <children>
+            <JFXButton buttonType="RAISED" layoutX="100.0" layoutY="58.0" onAction="#findPropertyOnclick" prefHeight="25.0" prefWidth="89.0" style="-fx-background-color: #c64c23;" text="Find Property" textFill="#f7f5f5" />
+            <Slider fx:id="maxSlider" layoutX="46.0" layoutY="35.0" />
+            <Slider fx:id="minSlider" layoutX="46.0" layoutY="7.0" />
+            <Label layoutX="14.0" layoutY="6.0" text="MIN" textFill="#fffdfd" />
+            <Label layoutX="13.0" layoutY="34.0" text="MAX" textFill="WHITE" />
+         </children>
+      </Pane>
+      <JFXComboBox fx:id="areaComboBox" onAction="#areaComboOnClick" prefWidth="80.0" promptText="    --Any--" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </JFXComboBox>
+      <JFXComboBox fx:id="areaByMetroComboBox" prefWidth="80.0" promptText="    --Any--" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </JFXComboBox>
+      <JFXComboBox fx:id="propertyTypeComboBox" prefWidth="80.0" promptText="    --Any--" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </JFXComboBox>
+      <JFXComboBox fx:id="bedroomComboBox" prefWidth="80.0" promptText="    --Any--" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </JFXComboBox>
+      <Label prefHeight="17.0" prefWidth="123.0" text="PRICE RANGE" textFill="#fefcfc" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+   </children>
+</GridPane>

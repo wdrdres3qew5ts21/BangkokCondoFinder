@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<!--fx:controller="login.blockDisplay.FXMLBlockDisplayController"-->
+<GridPane fx:id="blockDisplayPane" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: salmon;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.3333740234375" minWidth="10.0" prefWidth="121.66665395100912" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.6666819254557" minWidth="10.0" prefWidth="145.66667938232425" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="463.3332977294922" minWidth="10.0" prefWidth="134.33329264322913" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="193.33334350585938" minHeight="10.0" prefHeight="23.666666666666664" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="193.33334350585938" minHeight="10.0" prefHeight="21.66668701171875" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="304.6666593551636" minHeight="10.0" prefHeight="121.66664632161459" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="42.333343505859375" minHeight="10.0" prefHeight="39.66668701171875" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label fx:id="condoAttributeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="135.0" text="Sale : 1,900,900 Baht" GridPane.columnIndex="2" />
+      <Label fx:id="areaLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="161.0" text="Sukhumwit/Sukhumwit" GridPane.columnIndex="1" />
+      <Label fx:id="salePriceLabel" alignment="CENTER" contentDisplay="TOP" prefHeight="17.0" prefWidth="136.0" text="Cobdo/2Br/2bath" textAlignment="CENTER" />
+      <Label fx:id="rentPriceLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="129.0" text="Rent : 27,000/Month" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <JFXButton fx:id="viewMoreButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#viewButtonOnClick" prefHeight="9.0" prefWidth="58.0" style="-fx-background-color: black; -fx-background-radius: 60;" text="View &gt;" textFill="#fcf9f9" GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin>
+      </JFXButton>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="dasjkfjkasjkfjkasjfjkadfhdshgjksdhgskfhurindvzbjsdlhufj;fnosghdifuflgnogjgmbhlvodgmdldlgmxfjd,.hxkxvjxfjfuybfdkgndfjkvgffuobjdbvkuishgsogdfklnjkvgfiudnjbiujkglfnvudigrlugyddmdxkuvuf;bgv" wrappingWidth="210.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin>
+      </Text>
+   </children>
+</GridPane>

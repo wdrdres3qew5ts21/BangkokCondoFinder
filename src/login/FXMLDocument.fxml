@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" stylesheets="@GraphicCss.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLLoginController">
+    <bottom>
+        <AnchorPane prefHeight="71.0" prefWidth="600.0" style="-fx-background-color: coral;" BorderPane.alignment="CENTER" />
+    </bottom>
+    <center>
+        <StackPane fx:id="backgroundStackPane" prefHeight="480.0" prefWidth="840.0" styleClass="middle-bgimage" BorderPane.alignment="CENTER" />
+    </center>
+    <top>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <buttons>
+            <JFXButton fx:id="loginButton" minWidth="49.0" onAction="#callLogin" prefHeight="7.0" styleClass="logginButton-bg" stylesheets="@GraphicCss.css" />
+            <JFXButton fx:id="homeButton" buttonType="RAISED" onAction="#homeActionListener" style="-fx-background-color: #dd492e;" text="Home" textFill="#f7f6f6" />
+            <JFXButton fx:id="condoSaleButton" buttonType="RAISED" onAction="#saleActionListener" style="-fx-background-color: #dd492e;" text="Condo For Sale" textFill="#f5f3f3" />
+            <JFXButton fx:id="condoRentButton" buttonType="RAISED" onAction="#rentActionListener" style="-fx-background-color: #dd492e;" text="Condo For Rent" textFill="WHITE" />
+            <JFXButton fx:id="allCondoButton" buttonType="RAISED" onAction="#allActionListener" style="-fx-background-color: #dd492e;" text="All Condo A-Z" textFill="#fcf9f9" />
+         </buttons></ButtonBar>
+    </top>
+</BorderPane>

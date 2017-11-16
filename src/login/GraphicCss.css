@@ -1,0 +1,27 @@
+.left-bgcolor{
+
+    -fx-background-color: #ff5c5c; 
+    -fx-background-color: -moz-linear-gradient(top,  #ff5c5c 0%, #fe9090 55%, #febbbb 100%); /* FF3.6-15 */
+    -fx-background-color: -webkit-linear-gradient(top,  #ff5c5c 0%,#fe9090 55%,#febbbb 100%); /* Chrome10-25,Safari5.1-6 */
+    -fx-background-color: linear-gradient(to bottom,  #ff5c5c 0%,#fe9090 55%,#febbbb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    -fx-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff5c5c', endColorstr='#febbbb',GradientType=0 ); /* IE6-9 */
+
+}
+
+.middle-bgimage{
+    -fx-background-image: url("https://www.segalization.com/wp-content/uploads/2017/03/Valkyria-Revolution-and-Blue-Reflection-1080P-Wallpaper.jpg");	
+    -fx-background-size: cover;
+}
+
+.bgblue {
+    -fx-background-color: blue;
+}
+
+.bggreen{
+    -fx-background-color: green;
+}
+
+.logginButton-bg{
+    -fx-background-image: url("image/loginButton.png");
+    -fx-background-size: cover;
+}

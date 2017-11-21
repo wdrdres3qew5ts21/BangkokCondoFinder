@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <GridPane fx:id="detailPage" prefWidth="397.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
@@ -21,9 +20,6 @@
    <rowConstraints>
       <RowConstraints maxHeight="162.00002797444662" minHeight="10.0" prefHeight="152.00002797444662" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="207.66668701171875" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="209.33334350585938" minHeight="10.0" prefHeight="63.333343505859375" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="209.33334350585938" minHeight="10.0" prefHeight="70.66665649414062" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="209.33334350585938" minHeight="10.0" prefHeight="78.33334350585938" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <ImageView fx:id="imageView" fitHeight="140.0" fitWidth="247.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
@@ -38,18 +34,13 @@
       </Label>
       <AnchorPane fx:id="anchorBackButton" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <JFXButton fx:id="backButton" buttonType="RAISED" layoutX="14.0" layoutY="14.0" onAction="#backButtonOnClick" style="-fx-background-color: #dd492e; -fx-background-image: url(&quot;login/image/backArrow.png&quot;);" text="Back" textFill="WHITE" />
+            <JFXButton fx:id="backButton" buttonType="RAISED" layoutX="14.0" layoutY="14.0" onAction="#backButtonOnClick" style="-fx-background-color: #dd492e;" text="Back" textFill="WHITE" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="anchorPriceDetail" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
-         <children>
-            <Label fx:id="priceLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="117.0" layoutY="4.0" prefHeight="41.0" prefWidth="204.0" text="SALE/THB 99999" textFill="#b63d28">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghffhghvv" wrappingWidth="231.47009468078613" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label fx:id="priceLabel1" contentDisplay="CENTER" prefHeight="35.0" prefWidth="319.0" text="SALE/THB 99999" textFill="#b63d28" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </GridPane>

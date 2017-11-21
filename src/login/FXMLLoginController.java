@@ -74,10 +74,11 @@ import login.blockDisplay.FXMLPaginationController;
  * @author Ivora
  */
 public class FXMLLoginController extends LoginPermission implements Initializable {
-    private String currentPage="home";
+
+    private String currentPage = "home";
     private final double IMG_WIDTH = 600;
     private final double IMG_HEIGHT = 300;
-    public static int pageCallBack=0;
+    public static int pageCallBack = 0;
     private final int NUM_OF_IMGS = 3;
     private final int SLIDE_FREQ = 4; // in secs
     //ทุกอย่างต้องมี @FXML ถ้าเกิดเป็น โค้ดที่มาจาก JavaFX แล้วก็อย่าลืมดู controller fx:controller คือตัวที่จะโยงมายัง
@@ -87,7 +88,7 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
     @FXML
     private StackPane backgroundStackPane;
     @FXML
-    public  BorderPane mainView;
+    public BorderPane mainView;
     @FXML
     private JFXButton homeButton;
     @FXML
@@ -97,15 +98,17 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
     @FXML
     private JFXButton allCondoButton;
     public static BorderPane legacyMainView;//BackUp mainViewเอาไว้
+    public static Pagination legacyPage;//backUp page ไว้กรณีเรากดเปลี่ยนหน้า
+
     @Override //การทำงานคือ inititalize() จะถูกมาเรียกก่อน
     public void initialize(URL url, ResourceBundle rb) {
         MyConnection.getConnection();
         try {
             // TODO
             // callHome();
-            
+
             mainView.setLeft(FXMLLoader.load(getClass().getResource("LeftSearchBar/FXMLLeftSearchBar.fxml")));
-            legacyMainView=mainView;//ยัดค่า mainView ลงนี้เพื่อ backup
+            legacyMainView = mainView;//ยัดค่า mainView ลงนี้เพื่อ backup
         } catch (IOException ex) {
             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,7 +125,7 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
 
     @FXML //กดปุ่ม Home เมนูหลัก
     private void homeActionListener(ActionEvent event) {
-        currentPage="home";
+        currentPage = "home";
         //callHome();
         //  mainView.setStyle("-fx-background-image: url(\"http://gematsu.com/wp-content/uploads/2016/12/Blue-Reflection-Christmas-2016-Wallpaper.jpg\");");
 
@@ -131,13 +134,14 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
     @FXML //กดปุ่ม SaleCo//ndo
     private void saleActionListener(ActionEvent event) {
         //where type = ?
-        currentPage="sale";
-        callCondoForSale(); 
+        currentPage = "sale";
+        callCondoForSale();
+
     }
 
     @FXML //กดปุ่ม RentCondo
     private void rentActionListener(ActionEvent event) {
-        currentPage="rent";
+        currentPage = "rent";
         callCondoForRent();
     }
 
@@ -147,11 +151,19 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
         fxmlAll.setLocation(FXMLLoginController.class.getResource("blockDisplay/FXMLPagination.fxml"));
         FXMLPaginationController allController = new FXMLPaginationController();
         allController.setSqlCountContentNumber("select count(*) from room");
-        allController.setSqlContentToDisplay("select * from room");
+        allController.setSqlContentToDisplay("SELECT  * FROM room r\n"
+                + "left JOIN condo c ON\n"
+                + "r.condoId = c.condoId\n"
+                + "left JOIN area a ON\n"
+                + "c.areaId = a.areaId\n"
+                + "left JOIN picture p ON\n"
+                + "r.picId=p.picId");
         fxmlAll.setController(allController);
-        
+
         try {
             mainView.setCenter(fxmlAll.load());
+            legacyPage = (Pagination) mainView.getCenter();
+            System.out.println("Legacy DEbug" + legacyPage);
         } catch (IOException ex) {
             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -172,14 +184,22 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
         //สำคัญโคตรๆ ! ใช้วิธีนี้ในการแก้ปัญหา jave reflection
         FXMLLoader fxml = new FXMLLoader();
         fxml.setLocation(FXMLLoginController.class.getResource("blockDisplay/FXMLPagination.fxml"));
-        FXMLPaginationController rentController=new FXMLPaginationController();
+        FXMLPaginationController rentController = new FXMLPaginationController();
         rentController.setSqlCountContentNumber("select count(*) from room where typeId=2 ");
-        rentController.setSqlContentToDisplay("select * from room");
+        rentController.setSqlContentToDisplay("SELECT  * FROM room r\n"
+                + "left JOIN condo c ON\n"
+                + "r.condoId = c.condoId\n"
+                + "left JOIN area a ON\n"
+                + "c.areaId = a.areaId\n"
+                + "left JOIN picture p ON\n"
+                + "r.picId=p.picId\n"
+                + "where typeId=2");
         fxml.setController(rentController);
         try {
             mainView.setCenter(fxml.load());
 //            fxml.setController(new FXMLPaginationController());
-//            Pagination test=fxml.load();
+            //ค
+            legacyPage = (Pagination) (mainView.getCenter());
         } catch (IOException ex) {
             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -242,15 +262,23 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
     }
 
     public void callCondoForSale() {
-         //สำคัญโคตรๆ ! ใช้วิธีนี้ในการแก้ปัญหา jave reflection
+        //สำคัญโคตรๆ ! ใช้วิธีนี้ในการแก้ปัญหา jave reflection
         FXMLLoader fxml = new FXMLLoader();
         fxml.setLocation(FXMLLoginController.class.getResource("blockDisplay/FXMLPagination.fxml"));
-        FXMLPaginationController saleController=new FXMLPaginationController();
+        FXMLPaginationController saleController = new FXMLPaginationController();
         saleController.setSqlCountContentNumber("select count(*) from room where typeId=1 ");
-        saleController.setSqlContentToDisplay("select * from room");
+        saleController.setSqlContentToDisplay("SELECT  * FROM room r\n"
+                + "left JOIN condo c ON\n"
+                + "r.condoId = c.condoId\n"
+                + "left JOIN area a ON\n"
+                + "c.areaId = a.areaId\n"
+                + "left JOIN picture p ON\n"
+                + "r.picId=p.picId" + " where typeId=1");
         fxml.setController(saleController);
         try {
             mainView.setCenter(fxml.load());
+            //บันทึก state ของ pagination ไว้
+            legacyPage = (Pagination) (mainView.getCenter());
         } catch (IOException ex) {
             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }

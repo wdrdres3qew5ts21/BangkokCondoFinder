@@ -32,7 +32,7 @@ public class FXMLHorizonBarController extends FXMLLoginController implements Ini
     @FXML
     public Text contactStaffText;
     private String roomIdSQl;
-     private String descriptionSql;
+     public String descriptionSql;
     private String conId;
     @FXML
     Text metroText;
@@ -103,6 +103,8 @@ public class FXMLHorizonBarController extends FXMLLoginController implements Ini
             bathroomLabel.setText((test == null) ? rs.getString("r.bathrooms") : "-");
             bedroomLabel.setText((rs.getInt("r.bedrooms") != 0) ? rs.getInt("r.bedrooms") + "" : "-");
             bathroomLabel.setText((rs.getInt("r.bathrooms") != 0) ? rs.getInt("r.bathrooms") + "" : "-");
+            descriptionSql=(rs.getString("r.detail")!=null)?rs.getString("r.detail"):"-";
+            System.out.println(descriptionSql);
             if (rs.getInt(10) == 1) {
                 Image park = new Image("login/image/parking.png");
                 parkIcon.setPreserveRatio(true);

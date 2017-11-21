@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="360.0" prefWidth="397.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="15.0" layoutY="36.0" prefHeight="28.0" prefWidth="40.0" text="Type :" />
+      <Label layoutX="15.0" layoutY="83.0" prefHeight="28.0" prefWidth="54.0" text="Location :" />
+      <Label layoutX="181.0" layoutY="88.0" prefHeight="28.0" prefWidth="123.0" text="Bedrooms : " />
+      <Label layoutX="181.0" layoutY="131.0" prefHeight="28.0" prefWidth="67.0" text="Bathrooms :" />
+      <ImageView fx:id="gymIcon" fitHeight="54.0" fitWidth="54.0" layoutX="183.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="poolIcon" fitHeight="54.0" fitWidth="54.0" layoutX="256.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="parkIcon" fitHeight="54.0" fitWidth="54.0" layoutX="325.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="facilities" layoutX="177.0" layoutY="182.0" prefHeight="19.0" prefWidth="207.0" style="-fx-border-style: solid none;" text="FACILITIES">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="181.0" layoutY="47.0" prefHeight="17.0" prefWidth="89.0" text="Metro Station :" />
+      <Label layoutX="12.0" layoutY="134.0" text="Square Meters : " />
+      <Label layoutX="181.0" text="Condo Name :" />
+      <Label layoutX="15.0" text="Room ID :" />
+      <Label fx:id="roomIdLabel" layoutX="98.0" text="Label" />
+      <Label fx:id="typeLabel" layoutX="98.0" layoutY="41.0" text="Label" />
+      <Label fx:id="sqrLabel" layoutX="98.0" layoutY="134.0" text="Label" />
+      <Label fx:id="condoNameLabel" layoutX="267.0" layoutY="1.0" text="Label" />
+      <Label fx:id="bedroomLabel" layoutX="271.0" layoutY="93.0" text="Label" />
+      <Label fx:id="bathroomLabel" layoutX="271.0" layoutY="136.0" text="Label" />
+      <Text fx:id="locationText" layoutX="98.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="52.666659504175186" />
+      <Text fx:id="metroText" layoutX="267.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="115.47003173828125" />
+      <Text fx:id="contactStaffText" layoutX="19.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sttaff Name   LastName  tel () +663211" wrappingWidth="358.1366882324219" />
+      <Label fx:id="facilities1" layoutX="22.0" layoutY="271.0" prefHeight="19.0" prefWidth="207.0" style="-fx-border-style: solid none;" text="Contact Number">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

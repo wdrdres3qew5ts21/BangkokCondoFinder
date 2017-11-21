@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.Text?>
+
+
+<Text fx:id="descriptionText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="380.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" />

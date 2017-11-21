@@ -16,7 +16,7 @@
     <top>
         <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <buttons>
-            <JFXButton fx:id="loginButton" minWidth="49.0" onAction="#callLogin" prefHeight="7.0" styleClass="logginButton-bg" stylesheets="@GraphicCss.css" />
+            <JFXButton fx:id="loginButton" buttonType="RAISED" minWidth="49.0" onAction="#callLogin" prefHeight="10.0" styleClass="logginButton-bg" stylesheets="@GraphicCss.css" />
             <JFXButton fx:id="homeButton" buttonType="RAISED" onAction="#homeActionListener" style="-fx-background-color: #dd492e;" text="Home" textFill="#f7f6f6" />
             <JFXButton fx:id="condoSaleButton" buttonType="RAISED" onAction="#saleActionListener" style="-fx-background-color: #dd492e;" text="Condo For Sale" textFill="#f5f3f3" />
             <JFXButton fx:id="condoRentButton" buttonType="RAISED" onAction="#rentActionListener" style="-fx-background-color: #dd492e;" text="Condo For Rent" textFill="WHITE" />

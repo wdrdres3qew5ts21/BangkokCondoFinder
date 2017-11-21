@@ -47,7 +47,7 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
     private ImageView image;
     @FXML
     private Label price;
-
+    private String sqlCondoId;
     private String sqlRoomId;
     @FXML
     private JFXButton backButton;
@@ -63,7 +63,7 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
         //ดึงข้อมูลจากระบบมาเขียน
         System.out.println("SQL Room " + sqlRoomId);
         con = MyConnection.getConnection();
-        String sql = "SELECT  distinct r.roomId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
+        String sql = "SELECT  distinct r.roomId,r.condoId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
                 + "c.parking,c.fitness,c.swimming,r.detail FROM room r\n"
                 + "left JOIN condo c ON\n"
                 + "r.condoId = c.condoId\n"
@@ -73,18 +73,30 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
                 + "r.typeId = t.typeId\n"
                 + "join metro m ON\n"
                 + "a.areaId = m.areaId\n"
-                + "WHERE r.roomId=?";
+                + "WHERE r.roomId=? and r.condoId=?";
         try {
             PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setString(1, sqlRoomId);
+            System.out.println("condo id" + sqlCondoId);
+            pstm.setString(2, sqlCondoId);
             ResultSet rs = pstm.executeQuery();
             rs.next();
             System.out.println(detailPage.getChildren().get(0));//รูปคอนโด 
-            ((Label)((AnchorPane)(detailPage.getChildren().get(3))).getChildren().get(0)).setText("SALE/THB"+rs.getDouble("r.price"));//ราคาของคอนโด
-            ((Text)detailPage.getChildren().get(4)).setText(rs.getString("r.detail"));//เขียนข้อมูลคอนโด
+            /*((Label) ((AnchorPane) (detailPage.getChildren().get(3))).getChildren().get(0)).setText(
+                    (rs.getDouble("r.price") != 0) ? "SALE/THB" + rs.getDouble("r.price") : "SALE/THB" + rs.getDouble("r.price"));//ราคาของคอนโด
+            */
+           // ((Label)(detailPage.getChildren().get(3))).setText( (rs.getDouble("r.price") != 0) ? "SALE/THB" + rs.getDouble("r.price") : "SALE/THB" + rs.getDouble("r.price"));
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDetailPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public String getSqlCondoId() {
+        return sqlCondoId;
+    }
+
+    public void setSqlCondoId(String sqlCondoId) {
+        this.sqlCondoId = sqlCondoId;
     }
 
     public FXMLDetailPageController() {
@@ -111,31 +123,8 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
 
     @FXML
     private void backButtonOnClick(ActionEvent event) {
-        //ใช้ state ก่อนหน้าเพื่อย้อนกลับไป
-//        FXMLLoader fxmlPage = new FXMLLoader();
-//        fxmlPage.setLocation(FXMLDetailPageController.class.getResource("FXMLPagination.fxml"));
-//        FXMLPaginationController pageController = new FXMLPaginationController();
-//
-//        fxmlPage.setController(pageController);
         System.out.println("Page Call Back : " + pageCallBack);
-
         page = legacyPage;
-//        page.setPageFactory(new Callback<Integer, Node>() {
-//            //ทำการเขียน Anoonymous Class ข้างในไปเลยเพื่อจะใช้ method สร้างหน้า
-//            //method Call มีการ new Object ทุกครั้งที่สร้างหน้าใหม่ซึ่งดูแล้วเปลือง memory จริงๆควรจะทำ ArrayList
-//            //เอาไว้ดักเวลากดหน้าเช่นกดหน้า 1 ก็จำเม็มข้อมูลหน้า 1 ไว้แล้ววันหลังก็เอาไปใช้ได้เลย แต่ขอพักไว้ก่อน ไว้ทำตอนว่างล่ะกันนะจ้ะ
-//            @Override
-//            public Node call(Integer pageIndex) {
-//                pageIndex = pageCallBack;
-//
-//                pageCallBack = pageIndex;//บันทึก state ไว้ว่ากดมาจากหน้าไหน
-//                System.out.println("New Object !!!");
-//                System.out.println("หน้าที่จะไป : " + pageIndex);
-//                return this.page.get(pageIndex);//createPage(pageIndex);
-//
-//            }
-//        }
-//        );
         legacyMainView.setCenter(page);
         System.out.println("กดปุ่ม !!!");
     }

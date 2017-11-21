@@ -65,7 +65,7 @@ public class FXMLPaginationController extends FXMLLoginController implements Ini
     private double numberOfRow = 17.0;
     private int contentPerPage = 5;
     //เราจะเขียนลง page[0] หมายถึงหน้าที่ 1 นั้นมี content เนื้อหาอะไรบ้างนั่นเอง
-    private ArrayList<ScrollPane> page = new ArrayList<ScrollPane>();
+    public ArrayList<ScrollPane> page = new ArrayList<ScrollPane>();
 
     public FXMLPaginationController() {
 
@@ -139,17 +139,20 @@ public class FXMLPaginationController extends FXMLLoginController implements Ini
                 fxmlGrid.setLocation(FXMLPaginationController.class.getResource("FXMLBlockDisplay.fxml"));
                 FXMLBlockDisplayController blockController = new FXMLBlockDisplayController();
                 blockController.setSqlCondoRoomId(rs.getString("roomId"));
+                blockController.setSqlCondoId(rs.getString("condoId"));
                 fxmlGrid.setController(blockController);
                 //GridPane tempGrid = FXMLLoader.load(getClass().getResource("FXMLBlockDisplay.fxml"));
                 GridPane tempGrid = fxmlGrid.load();
                 try {
                     //ดึงข้อมูลจาก database มาเขียนีั            
                     System.out.println("WTF Test 1 ! ");
-                    ((Label) (tempGrid.getChildren().get(0))).setText(rs.getDouble("price") + "");
+                    ((Label) (tempGrid.getChildren().get(0))).setText((rs.getDouble("r.price")!=0.0)?rs.getDouble("r.price")+"":"-");
                     System.out.println("WTF Test 2 ! " + tempGrid.getChildren().get(1));
-                    ((Label) (tempGrid.getChildren().get(1))).setText("Sukhumwit");
+                    ((Label) (tempGrid.getChildren().get(1))).setText((rs.getString("city")!=null)?rs.getString("city"):"-");
                     System.out.println("WTF Test 3 ! " + tempGrid.getChildren().get(2));
-                    ((Label) (tempGrid.getChildren().get(2))).setText("Condo/" + rs.getInt("bedrooms") + "bed/" + rs.getInt("bathrooms") + "bath");
+                    String bed=(rs.getInt("r.bedrooms") != 0) ? rs.getInt("r.bedrooms") + "" : "-";
+                    String bath=(rs.getInt("r.bathrooms") != 0) ? rs.getInt("r.bathrooms") + "" : "-";
+                    ((Label) (tempGrid.getChildren().get(2))).setText("Condo/" + bed+ "bed/" + bath + "bath");
                     System.out.println("WTF Test 4 ! " + tempGrid.getChildren().get(3));//ราคาเช่าต่อเดือน
                     // ((Label) (tempGrid.getChildren().get(3))).setText(rs.getString(2));//ราคาเช่าต่อเดือน
                     //System.out.println("WTF Test 5 ! " + tempGrid.getChildren().get(4));
@@ -159,23 +162,32 @@ public class FXMLPaginationController extends FXMLLoginController implements Ini
                     String detailSet = rs.getString("detail");
                     detailSet = (detailSet.length() > 185) ? detailSet.substring(0, 185) + " [More...]" : detailSet;
                     ((Text) (tempGrid.getChildren().get(5))).setText(detailSet);
+                    InputStream in = null;
+                    ImageView image = null;
+
+                    java.sql.Blob blob = rs.getBlob("p.picture");
+                    if (blob != null) {
+                        in = blob.getBinaryStream();
+                        image = new ImageView(new Image(in));
+
+                    } else {
+                        System.out.println("picture is null :");
+                        image = new ImageView(new Image("login/image/notfoundImg.png"));
+                    }
+                    image.setFitWidth(150);
+                    image.setPreserveRatio(true);
+                    tempGrid.add(image, 0, 2);
                     System.out.println("Add Data ไปกี่ครั้ง" + sqlSelectRoomToDisplay);
                     rs.next();
+
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-                ImageView image = new ImageView("login/image/c1.jpg");
-                /*
-                PreparedStatement pic = con.prepareStatement("select picture from TestPic where picId=9");
-                ResultSet rsp = pic.executeQuery();
-                rsp.next();
-                java.sql.Blob blob = rsp.getBlob(1);
-                InputStream in = blob.getBinaryStream();  
-                ImageView image = new ImageView(new Image(in));
-                 */
-                image.setFitWidth(150);
-                image.setPreserveRatio(true);
-                tempGrid.add(image, 0, 2);
+                //  ImageView image = new ImageView("login/image/c1.jpg");
+
+//                PreparedStatement pic = con.prepareStatement("select picture from picture where picId=?");
+//                ResultSet rsp = pic.executeQuery();
+//                rsp.next();
                 //System.out.println(GridPane.get);
                 temptTile.getChildren().add(tempGrid);
             }

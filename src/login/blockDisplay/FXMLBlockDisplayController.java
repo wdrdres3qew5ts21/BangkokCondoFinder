@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
@@ -48,7 +49,7 @@ public class FXMLBlockDisplayController extends FXMLLoginController implements I
     private Label rentPriceLabel;
     @FXML
     private JFXButton viewMoreButton;
-    
+    private String condoId;
     /**
      * Initializes the controller class.
      */
@@ -71,6 +72,15 @@ public class FXMLBlockDisplayController extends FXMLLoginController implements I
         this.sqlCondoRoomId = sqlCondoRoomId;
         System.out.println("Set ID : " + sqlCondoRoomId);
     }
+    
+    public String getSqlCondoId() {
+        return condoId;
+    }
+
+    public void setSqlCondoId(String sqlCondoId) {
+        this.condoId = sqlCondoId;
+        System.out.println("Set ID : " + sqlCondoId);
+    }
 
     public void setPageCallBack(int callBack) {
         this.pageCallBack = callBack;
@@ -87,7 +97,9 @@ public class FXMLBlockDisplayController extends FXMLLoginController implements I
         FXMLDetailPageController detailPageControll = new FXMLDetailPageController();
         //ส่ง roomId จากที่โหลดเข้ามาตอน FXMLPagination 
         detailPage.setController(detailPageControll);
-        detailPageControll.setSQLRoomId(sqlCondoRoomId);         
+        detailPageControll.setPageCallBack(pageCallBack);
+        detailPageControll.setSQLRoomId(sqlCondoRoomId); 
+        detailPageControll.setSqlCondoId(condoId);
         System.out.println("กดปุ่ม view !!!");
         //-----------------------------------------------------------------------------------------     
         try {
@@ -102,8 +114,16 @@ public class FXMLBlockDisplayController extends FXMLLoginController implements I
                 tile.setVgap(4);
                 tile.setHgap(4);
                 tile.getChildren().add(detail);
-             
-                tile.getChildren().add(FXMLLoader.load(getClass().getResource("FXML.fxml")));
+                FXMLLoader horizontalBar=new FXMLLoader();
+                //โหลด HorizontalDetail ของ condo เข้าไปในระบบ
+                horizontalBar.setLocation(FXMLBlockDisplayController.class.getResource("FXMLHorizonBar.fxml"));
+                FXMLHorizonBarController horizonBarController=new FXMLHorizonBarController();
+                horizontalBar.setController(horizonBarController);         
+                horizonBarController.setSQLCondoId(condoId);
+                horizonBarController.setSQLRoomId(sqlCondoRoomId);
+                AnchorPane horizonAnchor=(AnchorPane)(horizontalBar.load());           
+                tile.getChildren().add(horizonAnchor); 
+                //โหลด DescriptionDetail ของ condoมาใส่จาก horizontalDetailController ที่มี sql นี้ยอู่แล้ว
                 legacyMainView.setCenter(new ScrollPane(tile));
             }
             System.out.println("null scrollpane");

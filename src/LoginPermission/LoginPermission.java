@@ -17,10 +17,19 @@ import java.util.logging.Logger;
  * @author Ivora
  */
 public class LoginPermission {//class สำหรับทำ session ว่าเรา login เข้ามาจริงๆแล้วนะ
+private static String userId="";
 
+    public static String getUserId() {
+        return userId;
+    }
+
+    public static void setUserId(String userId) {
+        LoginPermission.userId = userId;
+    }
     private static boolean loginStatus = false;
     private static String userName = "";
     private static String password = "";
+    private static int status = 0;
     private static Connection con;
 
     public static boolean isLoginStatus() {
@@ -33,6 +42,14 @@ public class LoginPermission {//class สำหรับทำ session ว่า
 
     public static String getUserName() {
         return userName;
+    }
+
+    public static int getStatus() {
+        return status;
+    }
+
+    public static void setStatus(int status) {
+        LoginPermission.status = status;
     }
 
     public static void setUserName(String userName) {
@@ -51,18 +68,22 @@ public class LoginPermission {//class สำหรับทำ session ว่า
         boolean status = false;
         Connection con = MyConnection.getConnection();
         try {
-            PreparedStatement statement = con.prepareStatement("select * from LOGIN where username=? and password=?");
+            PreparedStatement statement = con.prepareStatement("SELECT * FROM user u JOIN status s\n"
+                    + "ON u.statusId = s.statusId\n"
+                    + "WHERE u.userName=? AND u.userPassword=?");
             statement.setString(1, user);
             statement.setString(2, pass);
             statement.executeQuery();
             ResultSet rs = statement.getResultSet();
-            rs.next();//next มาดึงข้อมูลในชุดของ column แรกแล้วเช็คดูเรื่อง user กับ pass
+            //next มาดึงข้อมูลในชุดของ column แรกแล้วเช็คดูเรื่อง user กับ pass
             //ที่ user กรอกเข้ามานั้นตรงกับใน db หรือไม่
-            if (user.equals(rs.getString(1)) & pass.equals(rs.getString(2))) {//login success
+            if (rs.next()) {//login success
                 status = true;
                 //ดึงข้อมูลที่ user กรอกเข้ามาใช้ในระบบย
                 setUserName(user);
                 setPassword(pass);
+                setStatus(rs.getInt("s.statusId"));
+                setUserId(rs.getString("u.userId"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginPermission.class.getName()).log(Level.SEVERE, null, ex);

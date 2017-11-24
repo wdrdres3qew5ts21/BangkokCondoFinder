@@ -84,14 +84,13 @@ public class FXMLLeftSearchBarController implements Initializable {
             while (rs.next()) {
                 bedroomComboBox.getItems().add(rs.getInt(1));
             }
+          
             pstm = con.prepareStatement("SELECT DISTINCT nType from roomType ORDER BY 1");
             while (rs.next()) {
                 propertyTypeComboBox.getItems().add(rs.getString(1));
             }
-            pstm = con.prepareStatement("SELECT DISTINCT nType from roomType ORDER BY 1");
-            while (rs.next()) {
-                propertyTypeComboBox.getItems().add(rs.getString(1));
-            }
+            //ดึงประเภทคอนโดออกมา
+            
             //ดึงราคาต่ำสุดกับสูงสุดออกมา
             pstm = con.prepareStatement("(SELECT min(price) from room)\n"
                     + "union\n"

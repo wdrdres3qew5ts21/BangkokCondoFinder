@@ -86,14 +86,13 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
             ResultSet rs = pstm.executeQuery();
             rs.next();
             System.out.println(detailPage.getChildren().get(0));//รูปคอนโด 
-            String type="";
-            if(rs.getInt("r.typeId")==1){
-                type="SALE/THB";
+            String type = "";
+            if (rs.getInt("r.typeId") == 1) {
+                type = "SALE/THB";
+            } else {
+                type = " RENT/THB";
             }
-            else{
-                type=" RENT/THB";
-            }
-            setPrice(rs.getDouble("r.price") +type);
+            setPrice(rs.getDouble("r.price") + type);
             InputStream in = null;
             Image image = null;
             java.sql.Blob blob = rs.getBlob("p.picture");

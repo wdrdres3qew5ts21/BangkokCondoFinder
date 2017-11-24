@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="397.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="login.FXMLRegisterController">
+   <children>
+      <Label layoutX="26.0" layoutY="31.0" text="Register">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="24.0" layoutY="85.0" text="Username :">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="24.0" layoutY="123.0" text="Password : ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="23.0" layoutY="160.0" text="Re-Pass :">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="247.0" text="Lastname :">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="birthDatePicker" layoutX="110.0" layoutY="284.0" />
+      <PasswordField fx:id="passwordTextField" layoutX="115.0" layoutY="120.0" prefHeight="25.0" prefWidth="217.0" />
+      <PasswordField fx:id="confirmPWTextField" layoutX="115.0" layoutY="158.0" prefHeight="25.0" prefWidth="217.0" />
+      <Label layoutX="21.0" layoutY="288.0" text="Birth Date : ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="324.0" text="Email : ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="23.0" layoutY="208.0" text="Name : ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usernameTextField" layoutX="115.0" layoutY="83.0" prefHeight="25.0" prefWidth="217.0" />
+      <TextField fx:id="nameTextField" layoutX="115.0" layoutY="205.0" prefHeight="25.0" prefWidth="217.0" />
+      <TextField fx:id="lastnameTextField" layoutX="114.0" layoutY="244.0" prefHeight="25.0" prefWidth="217.0" />
+      <TextField fx:id="emailTextField" layoutX="109.0" layoutY="322.0" prefHeight="25.0" prefWidth="219.0" />
+      <JFXButton fx:id="registerButton" buttonType="RAISED" layoutX="303.0" layoutY="358.0" onAction="#registerOnClick" style="-fx-background-color: #dd492e;" text="Register" textFill="#fffefe">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="339.0" layoutY="87.0" text="*" textFill="#ea5b4e" />
+      <Label layoutX="338.0" layoutY="125.0" text="*" textFill="#ea5b4e" />
+      <Label layoutX="339.0" layoutY="158.0" text="*" textFill="#ea5b4e" />
+      <Label layoutX="337.0" layoutY="205.0" text="*" textFill="#ea5b4e" />
+      <Label layoutX="335.0" layoutY="246.0" text="*" textFill="#ea5b4e" />
+   </children>
+</AnchorPane>

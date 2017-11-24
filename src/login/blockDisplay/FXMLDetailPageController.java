@@ -8,6 +8,7 @@ package login.blockDisplay;
 import LoginPermission.MyConnection;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +25,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -44,9 +46,9 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
     @FXML
     private GridPane detailPage;
     @FXML
-    private ImageView image;
+    private ImageView imageView;
     @FXML
-    private Label price;
+    private Label priceLabel;
     private String sqlCondoId;
     private String sqlRoomId;
     @FXML
@@ -63,16 +65,18 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
         //ดึงข้อมูลจากระบบมาเขียน
         System.out.println("SQL Room " + sqlRoomId);
         con = MyConnection.getConnection();
-        String sql = "SELECT  distinct r.roomId,r.condoId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
+        String sql = "SELECT  distinct r.roomId,p.picture,r.typeId,r.condoId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
                 + "c.parking,c.fitness,c.swimming,r.detail FROM room r\n"
                 + "left JOIN condo c ON\n"
                 + "r.condoId = c.condoId\n"
-                + "JOIN area a ON\n"
+                + "left JOIN area a ON\n"
                 + "c.areaId = a.areaId\n"
-                + "JOIN roomType t ON\n"
+                + "left JOIN roomType t ON\n"
                 + "r.typeId = t.typeId\n"
-                + "join metro m ON\n"
+                + "left join metro m ON\n"
                 + "a.areaId = m.areaId\n"
+                + "left JOIN picture p ON\n"
+                + "r.picId=p.picId\n"
                 + "WHERE r.roomId=? and r.condoId=?";
         try {
             PreparedStatement pstm = con.prepareStatement(sql);
@@ -82,17 +86,42 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
             ResultSet rs = pstm.executeQuery();
             rs.next();
             System.out.println(detailPage.getChildren().get(0));//รูปคอนโด 
-            /*((Label) ((AnchorPane) (detailPage.getChildren().get(3))).getChildren().get(0)).setText(
-                    (rs.getDouble("r.price") != 0) ? "SALE/THB" + rs.getDouble("r.price") : "SALE/THB" + rs.getDouble("r.price"));//ราคาของคอนโด
-            */
-           // ((Label)(detailPage.getChildren().get(3))).setText( (rs.getDouble("r.price") != 0) ? "SALE/THB" + rs.getDouble("r.price") : "SALE/THB" + rs.getDouble("r.price"));
+            String type="";
+            if(rs.getInt("r.typeId")==1){
+                type="SALE/THB";
+            }
+            else{
+                type=" RENT/THB";
+            }
+            setPrice(rs.getDouble("r.price") +type);
+            InputStream in = null;
+            Image image = null;
+            java.sql.Blob blob = rs.getBlob("p.picture");
+            if (blob != null) {
+                in = blob.getBinaryStream();
+                image = new Image(in);
+            } else {
+                System.out.println("picture is null :");
+                image = new Image("login/image/notfoundImg.png");
+            }
+            setPictureTitle(image);
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDetailPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public void setPrice(String price) {
+        this.priceLabel.setText(price + "");
+    }
+
     public String getSqlCondoId() {
         return sqlCondoId;
+    }
+
+    public void setPictureTitle(Image in) {
+        this.imageView.setImage(in);
+        this.imageView.setFitWidth(250);
+        this.imageView.setPreserveRatio(true);
     }
 
     public void setSqlCondoId(String sqlCondoId) {

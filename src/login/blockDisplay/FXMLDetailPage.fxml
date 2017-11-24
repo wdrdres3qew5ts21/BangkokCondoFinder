@@ -27,7 +27,7 @@
             <Image url="@../image/c3.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="priceLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="91.0" style="-fx-background-color: rgb( 217,140,102);" text="PRICE" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="91.0" style="-fx-background-color: rgb( 217,140,102);" text="PRICE" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>
@@ -37,7 +37,7 @@
             <JFXButton fx:id="backButton" buttonType="RAISED" layoutX="14.0" layoutY="14.0" onAction="#backButtonOnClick" style="-fx-background-color: #dd492e;" text="Back" textFill="WHITE" />
          </children>
       </AnchorPane>
-      <Label fx:id="priceLabel1" contentDisplay="CENTER" prefHeight="35.0" prefWidth="319.0" text="SALE/THB 99999" textFill="#b63d28" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+      <Label fx:id="priceLabel" contentDisplay="CENTER" prefHeight="35.0" prefWidth="319.0" text="SALE/THB 99999" textFill="#b63d28" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>

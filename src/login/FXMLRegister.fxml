@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="397.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="login.FXMLRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="397.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLRegisterController">
    <children>
       <Label layoutX="26.0" layoutY="31.0" text="Register">
          <font>
@@ -36,15 +36,15 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <DatePicker fx:id="birthDatePicker" layoutX="110.0" layoutY="284.0" />
+      <DatePicker fx:id="birthDatePicker" layoutX="112.0" layoutY="318.0" />
       <PasswordField fx:id="passwordTextField" layoutX="115.0" layoutY="120.0" prefHeight="25.0" prefWidth="217.0" />
       <PasswordField fx:id="confirmPWTextField" layoutX="115.0" layoutY="158.0" prefHeight="25.0" prefWidth="217.0" />
-      <Label layoutX="21.0" layoutY="288.0" text="Birth Date : ">
+      <Label layoutX="23.0" layoutY="322.0" text="Birth Date : ">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="18.0" layoutY="324.0" text="Email : ">
+      <Label layoutX="22.0" layoutY="283.0" text="Email : ">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -54,10 +54,9 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameTextField" layoutX="115.0" layoutY="83.0" prefHeight="25.0" prefWidth="217.0" />
       <TextField fx:id="nameTextField" layoutX="115.0" layoutY="205.0" prefHeight="25.0" prefWidth="217.0" />
       <TextField fx:id="lastnameTextField" layoutX="114.0" layoutY="244.0" prefHeight="25.0" prefWidth="217.0" />
-      <TextField fx:id="emailTextField" layoutX="109.0" layoutY="322.0" prefHeight="25.0" prefWidth="219.0" />
+      <TextField fx:id="emailTextField" layoutX="107.0" layoutY="280.0" prefHeight="25.0" prefWidth="219.0" />
       <JFXButton fx:id="registerButton" buttonType="RAISED" layoutX="303.0" layoutY="358.0" onAction="#registerOnClick" style="-fx-background-color: #dd492e;" text="Register" textFill="#fffefe">
          <font>
             <Font size="14.0" />
@@ -68,5 +67,13 @@
       <Label layoutX="339.0" layoutY="158.0" text="*" textFill="#ea5b4e" />
       <Label layoutX="337.0" layoutY="205.0" text="*" textFill="#ea5b4e" />
       <Label layoutX="335.0" layoutY="246.0" text="*" textFill="#ea5b4e" />
+      <Label layoutX="20.0" layoutY="354.0" text="Gender : ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="329.0" layoutY="284.0" text="*" textFill="#ea5b4e" />
+      <ComboBox layoutX="96.0" layoutY="351.0" prefWidth="150.0" promptText="select gender" />
+      <TextField fx:id="usernameTextField" layoutX="115.0" layoutY="83.0" prefHeight="25.0" prefWidth="217.0" />
    </children>
 </AnchorPane>

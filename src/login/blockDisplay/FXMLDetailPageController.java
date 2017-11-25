@@ -11,9 +11,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,24 +65,35 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        //ดึงข้อมูลจากระบบมาเขียน
-        System.out.println("SQL Room " + sqlRoomId);
-        con = MyConnection.getConnection();
-        String sql = "SELECT  distinct r.roomId,p.picture,r.typeId,r.condoId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
-                + "c.parking,c.fitness,c.swimming,r.detail FROM room r\n"
-                + "left JOIN condo c ON\n"
-                + "r.condoId = c.condoId\n"
-                + "left JOIN area a ON\n"
-                + "c.areaId = a.areaId\n"
-                + "left JOIN roomType t ON\n"
-                + "r.typeId = t.typeId\n"
-                + "left join metro m ON\n"
-                + "a.areaId = m.areaId\n"
-                + "left JOIN picture p ON\n"
-                + "r.picId=p.picId\n"
-                + "WHERE r.roomId=? and r.condoId=?";
+        //บันทึกว่า User คนไหน login เข้ามา ด้วยเวลา
+        PreparedStatement pstm = null;
         try {
-            PreparedStatement pstm = con.prepareStatement(sql);
+            java.util.Date dt = new java.util.Date();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentTime = sdf.format(dt);
+            String sql = "INSERT INTO view VALUES (?,?,?);";
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, sql);
+            
+            
+            
+            //ดึงข้อมูลจากระบบมาเขียน
+            System.out.println("SQL Room " + sqlRoomId);
+            con = MyConnection.getConnection();
+            sql = "SELECT  distinct r.roomId,p.picture,r.typeId,r.condoId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
+                    + "c.parking,c.fitness,c.swimming,r.detail FROM room r\n"
+                    + "left JOIN condo c ON\n"
+                    + "r.condoId = c.condoId\n"
+                    + "left JOIN area a ON\n"
+                    + "c.areaId = a.areaId\n"
+                    + "left JOIN roomType t ON\n"
+                    + "r.typeId = t.typeId\n"
+                    + "left join metro m ON\n"
+                    + "a.areaId = m.areaId\n"
+                    + "left JOIN picture p ON\n"
+                    + "r.picId=p.picId\n"
+                    + "WHERE r.roomId=? and r.condoId=?";
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, sqlRoomId);
             System.out.println("condo id" + sqlCondoId);
             pstm.setString(2, sqlCondoId);

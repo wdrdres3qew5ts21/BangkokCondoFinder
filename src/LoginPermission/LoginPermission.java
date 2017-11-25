@@ -63,6 +63,8 @@ private static String userId="";
     public static void setPassword(String password) {
         LoginPermission.password = password;
     }
+    
+   
 
     public boolean authorizationLogin(String user, String pass) {
         boolean status = false;

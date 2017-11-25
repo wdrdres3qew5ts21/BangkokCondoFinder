@@ -86,6 +86,7 @@ public class FXMLLeftSearchBarController implements Initializable {
             }
           
             pstm = con.prepareStatement("SELECT DISTINCT nType from roomType ORDER BY 1");
+            rs=pstm.executeQuery();
             while (rs.next()) {
                 propertyTypeComboBox.getItems().add(rs.getString(1));
             }

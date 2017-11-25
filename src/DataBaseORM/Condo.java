@@ -10,98 +10,69 @@ package DataBaseORM;
  * @author Ivora
  */
 public class Condo {
-    private String propertyId,propertyType,location,style,bathroom;
-    private String detail;//ข้อมูลยาวๆ
-    private double squareMeter,price,managementFee;
-    private boolean balcony,parking;
+    private String condoId,condoName,area;
+    private String parking,swimming,fitness;
 
-    public String getPropertyId() {
-        return propertyId;
+    public Condo(){
+        
     }
 
-    public void setPropertyId(String propertyId) {
-        this.propertyId = propertyId;
+    public Condo(String condoId, String condoName, String area, int parking, int swimming, int fitness) {
+        this.condoId = condoId;
+        this.condoName = condoName;
+        this.area = area;
+        this.parking =(parking==1)?"Yes":"No";
+        this.swimming = (swimming==1)?"Yes":"No";
+        this.fitness = (fitness==1)?"Yes":"No";
     }
 
-    public String getPropertyType() {
-        return propertyType;
+    public String getCondoId() {
+        return condoId;
     }
 
-    public void setPropertyType(String propertyType) {
-        this.propertyType = propertyType;
+    public void setCondoId(String condoId) {
+        this.condoId = condoId;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCondoName() {
+        return condoName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCondoName(String condoName) {
+        this.condoName = condoName;
     }
 
-    public String getStyle() {
-        return style;
+    public String getArea() {
+        return area;
     }
 
-    public void setStyle(String style) {
-        this.style = style;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public String getBathroom() {
-        return bathroom;
-    }
-
-    public void setBathroom(String bathroom) {
-        this.bathroom = bathroom;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public double getSquareMeter() {
-        return squareMeter;
-    }
-
-    public void setSquareMeter(double squareMeter) {
-        this.squareMeter = squareMeter;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public double getManagementFee() {
-        return managementFee;
-    }
-
-    public void setManagementFee(double managementFee) {
-        this.managementFee = managementFee;
-    }
-
-    public boolean isBalcony() {
-        return balcony;
-    }
-
-    public void setBalcony(boolean balcony) {
-        this.balcony = balcony;
-    }
-
-    public boolean isParking() {
+    public String getParking() {
         return parking;
     }
 
-    public void setParking(boolean parking) {
+    public void setParking(String parking) {
         this.parking = parking;
     }
+
+    public String getSwimming() {
+        return swimming;
+    }
+
+    public void setSwimming(String swiming) {
+        this.swimming = swiming;
+    }
+
+    public String getFitness() {
+        return fitness;
+    }
+
+    public void setFitness(String fitness) {
+        this.fitness = fitness;
+    }
     
-    
+   
 }

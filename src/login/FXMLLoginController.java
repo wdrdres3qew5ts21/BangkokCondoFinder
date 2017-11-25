@@ -63,6 +63,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -300,15 +301,19 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
                     //จะเปลี่ยน Icon login เป็นสถานะเขา
                     //ถ้าเกิดเป็น Addmin จะวาปทุกหน้าออกไปให้หมดเลย
                     if (getStatus() == 1) {//admin
-                        mainView.getLeft().setVisible(false);
+                        //mainView.getLeft().setVisible(false);
                         FXMLLoader fxmlAdmin = new FXMLLoader();
-                        JFXTabPane adminTabPane = null;
+                        fxmlAdmin.setLocation(FXMLLoginController.class.getResource("AdminView/FXMLDataManipulation.fxml"));
+                        TabPane adminTabPane = null;
                         try {
                             adminTabPane = fxmlAdmin.load();
+                            mainView.setCenter(adminTabPane);
+                            
                         } catch (IOException ex) {
                             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         mainView.setCenter(adminTabPane);
+                        
                     }
                 } else {
                     alert.setHeaderText("Fail To Authentication !");

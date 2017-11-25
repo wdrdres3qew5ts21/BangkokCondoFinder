@@ -6,12 +6,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" stylesheets="@GraphicCss.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLLoginController">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="640.0" stylesheets="@GraphicCss.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLLoginController">
     <bottom>
         <AnchorPane prefHeight="71.0" prefWidth="600.0" style="-fx-background-color: coral;" BorderPane.alignment="CENTER" />
     </bottom>
     <center>
-        <StackPane fx:id="backgroundStackPane" prefHeight="480.0" prefWidth="840.0" styleClass="middle-bgimage" BorderPane.alignment="CENTER" />
+        <StackPane fx:id="backgroundStackPane" prefHeight="500.0" prefWidth="840.0" styleClass="middle-bgimage" BorderPane.alignment="CENTER" />
     </center>
     <top>
         <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">

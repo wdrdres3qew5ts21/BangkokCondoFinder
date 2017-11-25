@@ -17,7 +17,14 @@ import java.util.logging.Logger;
  * @author Ivora
  */
 public class LoginPermission {//class สำหรับทำ session ว่าเรา login เข้ามาจริงๆแล้วนะ
-private static String userId="";
+   
+    private static String userId = "";
+    private static boolean isMale=true;
+    private static boolean loginStatus = false;
+    private static String userName = "";
+    private static String password = "";
+    private static int status = 0;
+    private static Connection con;
 
     public static String getUserId() {
         return userId;
@@ -26,11 +33,6 @@ private static String userId="";
     public static void setUserId(String userId) {
         LoginPermission.userId = userId;
     }
-    private static boolean loginStatus = false;
-    private static String userName = "";
-    private static String password = "";
-    private static int status = 0;
-    private static Connection con;
 
     public static boolean isLoginStatus() {
         return loginStatus;
@@ -63,8 +65,6 @@ private static String userId="";
     public static void setPassword(String password) {
         LoginPermission.password = password;
     }
-    
-   
 
     public boolean authorizationLogin(String user, String pass) {
         boolean status = false;
@@ -81,7 +81,7 @@ private static String userId="";
             //ที่ user กรอกเข้ามานั้นตรงกับใน db หรือไม่
             if (rs.next()) {//login success
                 status = true;
-                //ดึงข้อมูลที่ user กรอกเข้ามาใช้ในระบบย
+                //ดึงข้อมูลที่ user กรอกเข้ามาใช้ในระบบ
                 setUserName(user);
                 setPassword(pass);
                 setStatus(rs.getInt("s.statusId"));
@@ -94,6 +94,14 @@ private static String userId="";
         System.out.println("LogIn Status From Parent Session : " + isLoginStatus());
         System.out.println("User : " + getUserName() + " Password : " + getPassword());
         return status;
+    }
+
+    public static boolean isIsMale() {
+        return isMale;
+    }
+
+    public static void setIsMale(boolean isMale) {
+        LoginPermission.isMale = isMale;
     }
 
 }

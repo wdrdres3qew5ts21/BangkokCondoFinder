@@ -5,6 +5,7 @@
  */
 package login.blockDisplay;
 
+import LoginPermission.AutoIncrement;
 import LoginPermission.MyConnection;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
     @FXML
     private JFXButton backButton;
     private FXMLLoader paginationCallBack;//บันทึก Object ของ Pagination เอาไว้เพื่อจะได้ย้อนหน้ากลับไปได้
-    Connection con = null;
+    Connection con = MyConnection.getConnection();
 
     /**
      * Initializes the controller class.
@@ -68,15 +69,31 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
         //บันทึกว่า User คนไหน login เข้ามา ด้วยเวลา
         PreparedStatement pstm = null;
         try {
+            ResultSet rs = null;
+            //select view date latest
+            pstm = con.prepareStatement("SELECT viewId FROM view ORDER BY 1 DESC LIMIT 1");
+            rs = pstm.executeQuery();
+            String latestView = "";
+            if (rs.next()) {
+                latestView = AutoIncrement.Generate(rs.getString(1));
+                System.out.println(latestView);
+            } else {//ถ้าเกิดไม่เคยมีการดูเลยสักครั้ง
+                latestView = "v0000";
+                System.out.println("first time view");
+            }
             java.util.Date dt = new java.util.Date();
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String currentTime = sdf.format(dt);
-            String sql = "INSERT INTO view VALUES (?,?,?);";
+            //System.out.println(currentTime);
+            String sql = "INSERT INTO view VALUES (?,?,?,?);";
             pstm = con.prepareStatement(sql);
-            pstm.setString(1, sql);
-            
-            
-            
+            pstm.setString(1, latestView);
+            pstm.setString(2, sqlRoomId);
+            long millis = System.currentTimeMillis();
+            java.sql.Date date = new java.sql.Date(millis);
+            pstm.setDate(3, date); 
+            pstm.setString(4,(isLoginStatus()==true)?getUserId():null);//เช็คลำดับว่าใครมันเข้ามาดูในระบบ
+            pstm.executeUpdate();
             //ดึงข้อมูลจากระบบมาเขียน
             System.out.println("SQL Room " + sqlRoomId);
             con = MyConnection.getConnection();
@@ -97,7 +114,7 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
             pstm.setString(1, sqlRoomId);
             System.out.println("condo id" + sqlCondoId);
             pstm.setString(2, sqlCondoId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             rs.next();
             System.out.println(detailPage.getChildren().get(0));//รูปคอนโด 
             String type = "";
@@ -133,7 +150,7 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
 
     public void setPictureTitle(Image in) {
         this.imageView.setImage(in);
-        this.imageView.setFitWidth(250);
+        this.imageView.setFitWidth(350);
         this.imageView.setPreserveRatio(true);
     }
 

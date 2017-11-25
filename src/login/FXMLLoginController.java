@@ -48,6 +48,7 @@ import javafx.util.Pair;
 import LoginPermission.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXScrollPane;
+import com.jfoenix.controls.JFXTabPane;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -68,6 +69,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -251,7 +253,7 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
                 @Override
                 public void handle(ActionEvent e) {
                     Window window = dialog.getDialogPane().getScene().getWindow();
-                    window.hide();            
+                    window.hide();
                     FXMLLoader register = new FXMLLoader();
                     register.setLocation(FXMLLoginController.class.getResource("FXMLRegister.fxml"));
                     AnchorPane registerPane = null;
@@ -259,7 +261,7 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
                         registerPane = register.load();
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
-                    }           
+                    }
                     mainView.setCenter(new ScrollPane(registerPane));
                     Fade.setFadeIn(mainView.getCenter());
                 }
@@ -286,24 +288,33 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
 
             result.ifPresent(usernamePassword -> {
                 System.out.println(usernamePassword.getKey() + usernamePassword.getValue());
-                Dialog<Pair<String, String>> popupAuthen = new Dialog<>();
-                popupAuthen.initStyle(StageStyle.UNDECORATED);
-                dialog.setTitle("Login Authentication");
-                dialog.setHeaderText("Welcome To BangkokCondoFinder");
-                Window window = popupAuthen.getDialogPane().getScene().getWindow();
-                window.setOnCloseRequest(event -> window.hide());
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.initStyle(StageStyle.UNDECORATED);
                 if (authorizationLogin(usernamePassword.getKey(), usernamePassword.getValue())) {
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.initStyle(StageStyle.UNDECORATED);
+                    alert.setHeaderText("Login Success Welcome Back " + getUserName());
+                    alert.setContentText("I have a great message for you!");
+                    alert.showAndWait();
                     //ถ้า สogin ผ่านก็จะเข้ามาในนี้เลย
-                    popupAuthen.setHeaderText("Sucess Authentication!");
-                    popupAuthen.setContentText("Login Success : " + usernamePassword.getKey());
+                    //จะเปลี่ยน Icon login เป็นสถานะเขา
+                    //ถ้าเกิดเป็น Addmin จะวาปทุกหน้าออกไปให้หมดเลย
+                    if (getStatus() == 1) {//admin
+                        mainView.getLeft().setVisible(false);
+                        FXMLLoader fxmlAdmin = new FXMLLoader();
+                        JFXTabPane adminTabPane = null;
+                        try {
+                            adminTabPane = fxmlAdmin.load();
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        mainView.setCenter(adminTabPane);
+                    }
                 } else {
-                    popupAuthen.setHeaderText("Fail Authentication!");
-                    popupAuthen.setContentText("Login Fail !!!");
+                    alert.setHeaderText("Fail To Authentication !");
+                    alert.setContentText("Please Check Your Username And Password Again !");
+                    alert.showAndWait();
                 }
-
-                popupAuthen.showAndWait();
-
-                // System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
             });
 
         } catch (SQLException ex) {

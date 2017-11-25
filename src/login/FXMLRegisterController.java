@@ -5,6 +5,7 @@
  */
 package login;
 
+import LoginPermission.AutoIncrement;
 import LoginPermission.MyConnection;
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
@@ -55,6 +56,8 @@ public class FXMLRegisterController implements Initializable {
     private TextField usernameTextField;
     @FXML
     private ComboBox<String> genderComboBox;
+    @FXML
+    private TextField phoneTextField;
 
     /**
      * Initializes the controller class.
@@ -73,7 +76,7 @@ public class FXMLRegisterController implements Initializable {
         boolean approveForRegister = true;
         Alert alert = new Alert(AlertType.WARNING);
         alert.initStyle(StageStyle.UNDECORATED);
-        
+
         try {
             //if นอกสุดดักคนเกรียนใส่อะไรแปลกๆเข้ามาเช่น !@!#@??><>
             if ((usernameTextField.getText().isEmpty() == true) | usernameTextField.getText().length() < 6) {
@@ -83,14 +86,13 @@ public class FXMLRegisterController implements Initializable {
                 alert.setContentText("Please fied at least 6 character or more.");
                 alert.showAndWait();
             } //ใส่รหัสผิดไม่เหมือนกัน
-            else if(passwordTextField.getText().length()<6){
+            else if (passwordTextField.getText().length() < 6) {
                 approveForRegister = false;
                 alert.setTitle("Empty Field!");
                 alert.setHeaderText("Password Security Is Unsafe !!!");
                 alert.setContentText("Password need at least 6 character or more.");
                 alert.showAndWait();
-            }
-            else if (passwordTextField.getText().equals(confirmPWTextField.getText()) != true | passwordTextField.getText().isEmpty()) {
+            } else if (passwordTextField.getText().equals(confirmPWTextField.getText()) != true | passwordTextField.getText().isEmpty()) {
                 approveForRegister = false;
                 alert.setTitle("Password mismatch!");
                 alert.setHeaderText("Password mismatch !!!");
@@ -141,16 +143,47 @@ public class FXMLRegisterController implements Initializable {
 
                 if (approveForRegister == true) {
                     //insert ค่าลงไป
-                    alert=new Alert(AlertType.CONFIRMATION);
+                    alert = new Alert(AlertType.CONFIRMATION);
                     alert.initStyle(StageStyle.UNDECORATED);
                     alert.setTitle("Confirmation Dialog");
                     alert.setHeaderText("Look, a Confirmation Dialog");
                     alert.setContentText("Are you ok with this?");
-                    
+
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == ButtonType.OK) {
                         // ... user chose OK //insert
                         System.out.println("Ok!!!");
+                        //ดึง Generate UseId ล่าสุดมาก่อน
+                        pstm = con.prepareStatement("SELECT userId from user ORDER BY 1 desc LIMIT 1");
+                        rs = pstm.executeQuery();
+                        String lastetId = "";
+                        if (rs.next()) {
+                            lastetId = rs.getString(1);
+                        } else {//กรณีไม่มี User สักคน
+                            lastetId = "u0000";
+                        }
+                        pstm = con.prepareStatement("INSERT INTO user\n"
+                                + "(userId, userName, userPassword, statusId, firstName, lastName, birthday, sex, phone, email)\n"
+                                + "VALUES (?,?,?,?,?,?,?,?,?,?)");
+                        pstm.setString(1, AutoIncrement.Generate(lastetId));
+                        pstm.setString(2, usernameTextField.getText());
+                        pstm.setString(3, passwordTextField.getText());
+                        pstm.setInt(4, 0);
+                        pstm.setString(5, nameTextField.getText());
+                        pstm.setString(6, lastnameTextField.getText());
+                        pstm.setDate(7, null);
+                        System.out.println(genderComboBox.getSelectionModel().toString());
+                        pstm.setString(8, null);
+                        pstm.setString(9, null);
+                        pstm.setString(10, emailTextField.getText());
+                        pstm.executeUpdate();
+                        alert = new Alert(AlertType.INFORMATION);
+                        alert.initStyle(StageStyle.UNDECORATED);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText("Successful Register !!!");
+                        alert.setContentText("Thank you for register BangkokCondoFinder.\nWe will redirect you to home page after this.");
+                        alert.showAndWait();
+
                     } else {
                         //donothing
                         // ... user chose CANCEL or closed the dialog

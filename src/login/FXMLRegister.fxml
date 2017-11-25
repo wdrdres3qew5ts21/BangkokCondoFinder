@@ -73,7 +73,7 @@
          </font>
       </Label>
       <Label layoutX="329.0" layoutY="284.0" text="*" textFill="#ea5b4e" />
-      <ComboBox layoutX="96.0" layoutY="351.0" prefWidth="150.0" promptText="select gender" />
+      <ComboBox fx:id="genderComboBox" layoutX="96.0" layoutY="351.0" prefWidth="150.0" promptText="select gender" />
       <TextField fx:id="usernameTextField" layoutX="115.0" layoutY="83.0" prefHeight="25.0" prefWidth="217.0" />
    </children>
 </AnchorPane>

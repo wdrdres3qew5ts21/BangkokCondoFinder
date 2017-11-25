@@ -61,6 +61,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -68,7 +69,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
+import javax.swing.JButton;
 import login.blockDisplay.FXMLPaginationController;
 
 /**
@@ -209,8 +212,7 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
 
     //เรียก GUI Login Method
     public void callLogin() {
-       
-        
+
         Connection con = MyConnection.getConnection();
         PreparedStatement pstm = null;
         try {
@@ -236,12 +238,27 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
             username.setPromptText("Username");
             PasswordField password = new PasswordField();
             password.setPromptText("Password");
-
+            Button register = new Button("Register");
             grid.add(new Label("Username:"), 0, 0);
             grid.add(username, 1, 0);
             grid.add(new Label("Password:"), 0, 1);
             grid.add(password, 1, 1);
-
+            
+            grid.add(register, 1, 2);
+            register.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                   FXMLLoader register=new FXMLLoader();
+                   register.setLocation(FXMLLoginController.class.getResource("FXMLRegister.fxml"));
+                   AnchorPane registerPane=null;
+                    try {
+                        registerPane = register.load();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    }        
+                   mainView.setCenter(new ScrollPane(registerPane));
+                }
+            });
             // Enable/Disable login button depending on whether a username was entered.
             Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
             loginButton.setDisable(true);
@@ -264,21 +281,22 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
             Optional<Pair<String, String>> result = dialog.showAndWait();
 
             result.ifPresent(usernamePassword -> {
-                System.out.println(usernamePassword.getKey()+usernamePassword.getValue());
+                System.out.println(usernamePassword.getKey() + usernamePassword.getValue());
                 Dialog<Pair<String, String>> popupAuthen = new Dialog<>();
                 dialog.setTitle("Login Authentication");
                 dialog.setHeaderText("Welcome To BangkokCondoFinder");
+                Window window = popupAuthen.getDialogPane().getScene().getWindow();
+                window.setOnCloseRequest(event -> window.hide());
                 if (authorizationLogin(usernamePassword.getKey(), usernamePassword.getValue())) {
                     //ถ้า สogin ผ่านก็จะเข้ามาในนี้เลย
                     popupAuthen.setHeaderText("Sucess Authentication!");
-                    popupAuthen.setContentText("Login Success : "+usernamePassword.getKey());           
+                    popupAuthen.setContentText("Login Success : " + usernamePassword.getKey());
+                } else {
+                    popupAuthen.setHeaderText("Fail Authentication!");
+                    popupAuthen.setContentText("Login Fail !!!");
                 }
-                else{
-                     popupAuthen.setHeaderText("Fail Authentication!");
-                        popupAuthen.setContentText("Login Fail !!!");
-                }
-                popupAuthen.show();
-                
+
+                popupAuthen.showAndWait();
 
                 // System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
             });

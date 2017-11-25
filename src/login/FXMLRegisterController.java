@@ -23,6 +23,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -50,6 +51,8 @@ public class FXMLRegisterController implements Initializable {
     private TextField emailTextField;
     @FXML
     private TextField usernameTextField;
+    @FXML
+    private ComboBox<String> genderComboBox;
 
     /**
      * Initializes the controller class.
@@ -57,6 +60,8 @@ public class FXMLRegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        genderComboBox.getItems().add("male");
+        genderComboBox.getItems().add("female");
 
     }
 

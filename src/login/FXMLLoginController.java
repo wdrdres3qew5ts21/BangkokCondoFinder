@@ -69,6 +69,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import javax.swing.JButton;
@@ -220,6 +221,7 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
                     + "ON user.statusId = status.statusId");
             // Create the custom dialog.
             Dialog<Pair<String, String>> dialog = new Dialog<>();
+            dialog.initStyle(StageStyle.UNDECORATED);
             dialog.setTitle("Login Authentication");
             dialog.setHeaderText("Welcome To BangkokCondoFinder");
             // Set the icon (must be included in the project).
@@ -243,20 +245,23 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
             grid.add(username, 1, 0);
             grid.add(new Label("Password:"), 0, 1);
             grid.add(password, 1, 1);
-            
+
             grid.add(register, 1, 2);
             register.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
-                   FXMLLoader register=new FXMLLoader();
-                   register.setLocation(FXMLLoginController.class.getResource("FXMLRegister.fxml"));
-                   AnchorPane registerPane=null;
+                    Window window = dialog.getDialogPane().getScene().getWindow();
+                    window.hide();            
+                    FXMLLoader register = new FXMLLoader();
+                    register.setLocation(FXMLLoginController.class.getResource("FXMLRegister.fxml"));
+                    AnchorPane registerPane = null;
                     try {
                         registerPane = register.load();
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
-                    }        
-                   mainView.setCenter(new ScrollPane(registerPane));
+                    }           
+                    mainView.setCenter(new ScrollPane(registerPane));
+                    Fade.setFadeIn(mainView.getCenter());
                 }
             });
             // Enable/Disable login button depending on whether a username was entered.
@@ -277,12 +282,12 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
                 }
                 return null;
             });
-
             Optional<Pair<String, String>> result = dialog.showAndWait();
 
             result.ifPresent(usernamePassword -> {
                 System.out.println(usernamePassword.getKey() + usernamePassword.getValue());
                 Dialog<Pair<String, String>> popupAuthen = new Dialog<>();
+                popupAuthen.initStyle(StageStyle.UNDECORATED);
                 dialog.setTitle("Login Authentication");
                 dialog.setHeaderText("Welcome To BangkokCondoFinder");
                 Window window = popupAuthen.getDialogPane().getScene().getWindow();

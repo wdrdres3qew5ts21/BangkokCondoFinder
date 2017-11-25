@@ -27,6 +27,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -70,6 +72,8 @@ public class FXMLRegisterController implements Initializable {
         Connection con = MyConnection.getConnection();
         boolean approveForRegister = true;
         Alert alert = new Alert(AlertType.WARNING);
+        alert.initStyle(StageStyle.UNDECORATED);
+        
         try {
             //if นอกสุดดักคนเกรียนใส่อะไรแปลกๆเข้ามาเช่น !@!#@??><>
             if ((usernameTextField.getText().isEmpty() == true) | usernameTextField.getText().length() < 6) {
@@ -79,6 +83,13 @@ public class FXMLRegisterController implements Initializable {
                 alert.setContentText("Please fied at least 6 character or more.");
                 alert.showAndWait();
             } //ใส่รหัสผิดไม่เหมือนกัน
+            else if(passwordTextField.getText().length()<6){
+                approveForRegister = false;
+                alert.setTitle("Empty Field!");
+                alert.setHeaderText("Password Security Is Unsafe !!!");
+                alert.setContentText("Password need at least 6 character or more.");
+                alert.showAndWait();
+            }
             else if (passwordTextField.getText().equals(confirmPWTextField.getText()) != true | passwordTextField.getText().isEmpty()) {
                 approveForRegister = false;
                 alert.setTitle("Password mismatch!");
@@ -130,9 +141,12 @@ public class FXMLRegisterController implements Initializable {
 
                 if (approveForRegister == true) {
                     //insert ค่าลงไป
+                    alert=new Alert(AlertType.CONFIRMATION);
+                    alert.initStyle(StageStyle.UNDECORATED);
                     alert.setTitle("Confirmation Dialog");
                     alert.setHeaderText("Look, a Confirmation Dialog");
                     alert.setContentText("Are you ok with this?");
+                    
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == ButtonType.OK) {
                         // ... user chose OK //insert
@@ -140,6 +154,7 @@ public class FXMLRegisterController implements Initializable {
                     } else {
                         //donothing
                         // ... user chose CANCEL or closed the dialog
+                        System.out.println("Cancle !");
                     }
                 }
 

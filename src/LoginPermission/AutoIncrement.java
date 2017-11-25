@@ -25,6 +25,7 @@ public class AutoIncrement {
     }
     public static void main(String[] args) {
         System.out.println(Generate("s0009"));
+        
     }
     
 }

@@ -3,13 +3,16 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.AdminView.FXMLDataManipulationController">
    <children>
@@ -77,14 +80,21 @@
                         <Label layoutX="37.0" layoutY="103.0" text="Bathroom" />
                         <Label layoutX="38.0" layoutY="137.0" text="Bedroom" />
                         <Label layoutX="269.0" layoutY="137.0" text="SqMeter" />
-                        <TextField fx:id="bedroomField" layoutX="105.0" layoutY="99.0" />
                         <TextField fx:id="bedroomField" layoutX="105.0" layoutY="133.0" />
+                        <TextField fx:id="bathroomField" layoutX="105.0" layoutY="99.0" />
                         <TextField fx:id="priceField" layoutX="323.0" layoutY="99.0" />
                         <TextField fx:id="sqMeter" layoutX="323.0" layoutY="133.0" />
-                        <Label layoutX="40.0" layoutY="178.0" text="Description" />
-                        <TextField fx:id="decriptionField" layoutX="39.0" layoutY="203.0" prefHeight="113.0" prefWidth="447.0" />
+                        <Label layoutX="34.0" layoutY="173.0" text="Description" />
                         <Label layoutX="278.0" layoutY="62.0" text="Type :" />
-                        <TextField fx:id="typeField" layoutX="323.0" layoutY="58.0" />
+                        <Label layoutX="29.0" layoutY="62.0" text="CondoName" />
+                        <ComboBox fx:id="areaBox" layoutX="104.0" layoutY="58.0" prefWidth="150.0" />
+                        <ComboBox fx:id="typeConboBox" layoutX="322.0" layoutY="58.0" prefWidth="150.0" />
+                        <Label fx:id="roomIdLabel" layoutX="38.0" layoutY="23.0" prefHeight="17.0" prefWidth="153.0" text="RoomID:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="descriptionField" layoutX="35.0" layoutY="201.0" prefHeight="125.0" prefWidth="449.0" />
                      </children>
                   </AnchorPane>
               </content>

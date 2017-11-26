@@ -30,6 +30,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -38,6 +39,7 @@ import javafx.scene.control.SortEvent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -45,6 +47,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import login.FXMLLoginController;
+import org.controlsfx.control.CheckComboBox;
 
 /**
  * FXML Controller class
@@ -132,18 +135,32 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     private TextField priceField;
     @FXML
     private TextField sqMeter;
-    @FXML
-    private TextField decriptionField;
+
     @FXML
     private ComboBox<String> areaBox;
     @FXML
-    private TextField typeField;
+    private TextField bathroomField;
+    @FXML
+    private ComboBox<String> typeConboBox;
+    @FXML
+    private Label roomIdLabel;
+    @FXML
+    private TextArea descriptionField;
+
+    public FXMLDataManipulationController() {
+
+    }
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            con.setAutoCommit(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO
         //Alert Dialog กรณีเลือก Tab Update ผิด
         if (idLabel == null) {
@@ -265,7 +282,7 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
             System.out.println("dfsd!!!! Null uuuuuuuuuuuuu");
         }
         if (firstTime == true) {
-            idLabel.setText(checkTab.toUpperCase() + "ID");
+            //idLabel.setText(checkTab.toUpperCase() + "ID");
             firstTime = false;
         } else {
             idLabel.setText(checkTab.toUpperCase() + "ID");
@@ -308,59 +325,51 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private void updateButtonOnClick(ActionEvent event) {
         boolean isInsert = false;
-        if (validSelectTab() == true) {
-            //เช็คต่อว่ากำลังทำงานของ Tab ไหน
-            if (checkTab.equals("room")) {
-                FXMLLoader roomFXML = new FXMLLoader(FXMLDataManipulationController.class.getResource("MainWindowView.fxml"));
-                // roomFXML.setLocation();
-                // FXMLRoomFormController roomController=new FXMLRoomFormController();
-                // roomFXML.setController(roomController);
+        try {
+            pstm = con.prepareStatement("SELECT r.condoId from room r\n"
+                    + "join condo c ON r.condoId = c.condoId\n"
+                    + "WHERE c.condoName =?");
+            System.out.println("condoname " + areaBox.getSelectionModel().getSelectedItem());
+            pstm.setString(1, areaBox.getSelectionModel().getSelectedItem());
+            rs = pstm.executeQuery();
+            rs.next();
+            String condoId = rs.getString(1);
+            //pstm.setInt(1, Integer.parseInt(typeField.getText()));
+            pstm = con.prepareStatement("UPDATE room r\n"
+                    + "SET r.condoId=?,r.typeId=?,r.bathrooms=?,r.price=?,\n"
+                    + "  r.bedrooms=?,r.sqMeters=?,r.detail=?\n"
+                    + "WHERE r.roomId=?;");
+            String roomId = "";
+            System.out.println("!!!");
+            pstm.setString(1, (condoId != null) ? condoId : null);
+            pstm.setInt(2, (typeConboBox.getSelectionModel().getSelectedItem().equalsIgnoreCase("sell")) ? 1 : 2);
+            pstm.setInt(3, (!bathroomField.getText().isEmpty()) ? Integer.parseInt(bathroomField.getText()) : 0);
+            pstm.setInt(4, (!priceField.getText().isEmpty()) ? Integer.parseInt(priceField.getText()) : 0);
+            pstm.setInt(5, (!bedroomField.getText().isEmpty()) ? Integer.parseInt(bedroomField.getText()) : 0);
+            pstm.setInt(6, (!sqMeter.getText().isEmpty()) ? Integer.parseInt(sqMeter.getText()) : 0);
+            pstm.setString(7, (!descriptionField.getText().isEmpty()) ? descriptionField.getText() : null);
+            pstm.setString(8, idTextField.getText());
+            System.out.println("dasdasdas" + idTextField.getText());
+            con.setAutoCommit(true);
+            pstm.executeUpdate();
 
-                //JFXDialogLayout popup=condoFXML.load();
-                try {
-                    AnchorPane condoPopup = roomFXML.load();
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setHeaderText("Successful Update");
+            alert.setContentText("Successful in update try back to table and see what happend !");
+            alert.showAndWait();
+            roomTable.getItems().clear();
+            loadManageRoom();
 
-                    System.out.println("adfdsfds" + condoPopup.toString());
-                    mainView.setCenter(condoPopup);
-                    System.out.println("success!!");
-
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            } else if (checkTab.equals("condo")) {
-
-            } else if (checkTab.equals("staff")) {
-
-            } else if (checkTab.equals("editRoom")) {
-                String areaId = "";
-                try {
-//                    pstm = con.prepareStatement("SELECT areaId from area\n"
-//                            + "WHERE city LIKE ?");
-//                    pstm.setString(1, areaBox.getSelectionModel().getSelectedItem());
-//                    rs = pstm.executeQuery();
-//                    rs.next();
-//                    areaId = rs.getString(1);
-//                    pstm= con.prepareStatement("UPDATE room\n"
-//                            + "SET typeId=?,price=?,bedrooms=?,bathrooms=?,sqMeters=?,\n"
-//                            + "  ,detail=?\n"
-//                            + "WHERE roomId=?");
-                    pstm = con.prepareStatement("UPDATE room\n"
-                            + "SET price=?,bedrooms=?,bathrooms=?,sqMeters=?\n"
-                            + "WHERE roomId=?;");
-                    //pstm.setInt(1, Integer.parseInt(typeField.getText()));
-                    pstm.setInt(1, Integer.parseInt(priceField.getText()));
-                    pstm.setInt(2, Integer.parseInt(bedroomField.getText()));
-                    pstm.setInt(3, Integer.parseInt(bathroomColumn.getText()));
-                    pstm.setInt(4, Integer.parseInt(sqMeter.getText()));
-                //    pstm.setString(6, decriptionField.getText());
-                    pstm.setInt(5, Integer.parseInt(idLabel.getText()));
-                    pstm.executeUpdate();
-                } catch (SQLException ex) {
-                    Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setHeaderText("Fail in upddate !");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
         }
+
     }
 
     @FXML
@@ -386,7 +395,6 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
                         Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-
             }
         }
     }
@@ -445,13 +453,33 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private void editRoomSelectTab(Event event) {
         checkTab = "editRoom";
+        typeConboBox.getItems().add("sell");
+        typeConboBox.getItems().add("rent");
         System.out.println("edit room");
         try {
-            pstm = con.prepareStatement("select condoName condoName from condo");
+            pstm = con.prepareStatement("select condoName from condo");
             rs = pstm.executeQuery();
             while (rs.next()) {
                 areaBox.getItems().add(rs.getString(1));
             }
+
+            pstm = con.prepareStatement("select r.roomId,c.condoName,t.nType,r.bathrooms,r.price,\n"
+                    + "r.bedrooms,r.sqMeters,r.detail from room r\n"
+                    + "left JOIN roomType t ON t.typeId=r.typeId\n"
+                    + "left join condo c ON r.condoId = c.condoId\n"
+                    + "left JOIN area a ON a.areaId=c.areaId\n"
+                    + "WHERE r.roomId=?;");
+            pstm.setString(1, idTextField.getText());
+            rs = pstm.executeQuery();
+            rs.next();
+            roomIdLabel.setText(rs.getString(1));
+            areaBox.setValue(rs.getString(2));
+            typeConboBox.setValue(rs.getString(3));
+            bathroomField.setText(rs.getString(4));
+            priceField.setText(rs.getString(5));
+            bedroomField.setText(rs.getString(6));
+            sqMeter.setText(rs.getString(7));
+            descriptionField.setText(rs.getString(8));
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
         }

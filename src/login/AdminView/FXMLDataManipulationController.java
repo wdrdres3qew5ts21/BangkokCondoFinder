@@ -30,6 +30,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -37,6 +38,7 @@ import javafx.scene.control.SortEvent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -64,8 +66,6 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     private ScrollPane staffManageScrollPane;
     @FXML
     private ScrollPane roomManageScrollPane;
-    @FXML
-    private ScrollPane viewChartManageScrollPane;
     @FXML
     private TableColumn<Condo, String> condoIdColumn;
     @FXML
@@ -101,8 +101,6 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private Tab roomTab;
     @FXML
-    private Tab viewTab;
-    @FXML
     private JFXButton insertButton;
     @FXML
     private JFXButton updateButton;
@@ -128,6 +126,18 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     private TableColumn<Staff, String> cityColumn;
     @FXML
     private TableColumn<Staff, String> positionColumn;
+    @FXML
+    private TextField bedroomField;
+    @FXML
+    private TextField priceField;
+    @FXML
+    private TextField sqMeter;
+    @FXML
+    private TextField decriptionField;
+    @FXML
+    private ComboBox<String> areaBox;
+    @FXML
+    private TextField typeField;
 
     /**
      * Initializes the controller class.
@@ -170,6 +180,11 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
         loadManageCondo();
         loadManageRoom();
         loadManageStaff();
+
+    }
+
+    public void loadAreaBox() {
+
     }
 
     public void loadManageStaff() {
@@ -317,6 +332,33 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
 
             } else if (checkTab.equals("staff")) {
 
+            } else if (checkTab.equals("editRoom")) {
+                String areaId = "";
+                try {
+//                    pstm = con.prepareStatement("SELECT areaId from area\n"
+//                            + "WHERE city LIKE ?");
+//                    pstm.setString(1, areaBox.getSelectionModel().getSelectedItem());
+//                    rs = pstm.executeQuery();
+//                    rs.next();
+//                    areaId = rs.getString(1);
+//                    pstm= con.prepareStatement("UPDATE room\n"
+//                            + "SET typeId=?,price=?,bedrooms=?,bathrooms=?,sqMeters=?,\n"
+//                            + "  ,detail=?\n"
+//                            + "WHERE roomId=?");
+                    pstm = con.prepareStatement("UPDATE room\n"
+                            + "SET price=?,bedrooms=?,bathrooms=?,sqMeters=?\n"
+                            + "WHERE roomId=?;");
+                    //pstm.setInt(1, Integer.parseInt(typeField.getText()));
+                    pstm.setInt(1, Integer.parseInt(priceField.getText()));
+                    pstm.setInt(2, Integer.parseInt(bedroomField.getText()));
+                    pstm.setInt(3, Integer.parseInt(bathroomColumn.getText()));
+                    pstm.setInt(4, Integer.parseInt(sqMeter.getText()));
+                //    pstm.setString(6, decriptionField.getText());
+                    pstm.setInt(5, Integer.parseInt(idLabel.getText()));
+                    pstm.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -398,6 +440,22 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private void staffTableOnClick(MouseEvent event) {
         idTextField.setText(staffTable.getSelectionModel().getSelectedItem().getStaffId());
+    }
+
+    @FXML
+    private void editRoomSelectTab(Event event) {
+        checkTab = "editRoom";
+        System.out.println("edit room");
+        try {
+            pstm = con.prepareStatement("select condoName condoName from condo");
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                areaBox.getItems().add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

@@ -29,12 +29,13 @@ import login.FXMLLoginController;
  * @author Ivora
  */
 public class FXMLHorizonBarController extends FXMLLoginController implements Initializable {
+
     @FXML
     public Text contactStaffText;
     private String roomIdSQl;
-     public String descriptionSql;
+    public String descriptionSql;
     private String conId;
-    @FXML 
+    @FXML
     public Text descriptionText;
     @FXML
     Text metroText;
@@ -86,8 +87,7 @@ public class FXMLHorizonBarController extends FXMLLoginController implements Ini
                 + "a.areaId = m.areaId\n"
                 + "LEFT JOIN staff s ON c.staffId = s.staffId \n"
                 + "WHERE r.roomId=? and r.condoId=?";
-       
-        
+
         try {
             PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setString(1, roomIdSQl);
@@ -105,8 +105,8 @@ public class FXMLHorizonBarController extends FXMLLoginController implements Ini
             bathroomLabel.setText((test == null) ? rs.getString("r.bathrooms") : "-");
             bedroomLabel.setText((rs.getInt("r.bedrooms") != 0) ? rs.getInt("r.bedrooms") + "" : "-");
             bathroomLabel.setText((rs.getInt("r.bathrooms") != 0) ? rs.getInt("r.bathrooms") + "" : "-");
-            descriptionSql=(rs.getString("r.detail")!=null)?rs.getString("r.detail"):"-";
-            descriptionText.setText( (rs.getString("r.detail")!=null)?rs.getString("r.detail"):"-"   );
+            descriptionSql = (rs.getString("r.detail") != null) ? rs.getString("r.detail") : "-";
+            descriptionText.setText((rs.getString("r.detail") != null) ? rs.getString("r.detail") : "-");
             System.out.println(descriptionSql);
             if (rs.getInt(10) == 1) {
                 Image park = new Image("login/image/parking.png");
@@ -126,32 +126,33 @@ public class FXMLHorizonBarController extends FXMLLoginController implements Ini
             System.out.println("fukit");
             System.out.println(conId);
             System.out.println(roomIdSQl);
-             String sqlStaff = "SELECT staffFirstName,staffLastName,staffPhone FROM room r\n"
-                + "LEFT JOIN condo c ON r.condoId = c.condoId\n"
-                + "LEFT JOIN staff s ON c.staffId = s.staffId\n"
-                + "WHERE r.roomId=? and r.condoId=?";
+            String sqlStaff = "SELECT u.firstName,u.lastName,u.phone FROM room r\n"
+                    + "LEFT JOIN condo c ON r.condoId = c.condoId\n"
+                    + "LEFT JOIN user u ON r.userId = u.userId\n"
+                    + "LEFT JOIN staff s ON c.staffId = s.staffId\n"
+                    + "WHERE r.roomId=? and r.condoId=?;";
             //write staff detail
-          pstm=con.prepareStatement(sqlStaff);
+            pstm = con.prepareStatement(sqlStaff);
             pstm.setString(1, roomIdSQl);
             pstm.setString(2, conId);
             rs = pstm.executeQuery();
-            if(rs.next()){
-            String staffTxt = ((rs.getString(1) != null) ? rs.getString(1) : "-")+" "+((rs.getString(2) != null) ? rs.getString(2) : "-")
-                    +((rs.getString(3) != null) ? rs.getString(3) : "-");//(rs.getString(1)!=null)?rs.getString(1):"-";
+            if (rs.next()) {
+                String staffTxt = ((rs.getString(1) != null) ? rs.getString(1) : "-") + " " + ((rs.getString(2) != null) ? rs.getString(2) : "-")
+                        + ((rs.getString(3) != null) ? rs.getString(3) : "-");//(rs.getString(1)!=null)?rs.getString(1):"-";
 //            metroText.setText((rs.getString(1)!=null)?rs.getString(1):"-");
-            System.out.println("Staff Debug" + staffTxt);
-            contactStaffText.setText(staffTxt);
-            //metroText.setText(metroTxt);
-            while (rs.next()) {
-//                metroTxt=(rs.getString(1)!=null)?rs.getString(1):"-";
-                staffTxt += ","+((rs.getString(1) != null) ? rs.getString(1) : "-")+" "+((rs.getString(2) != null) ? rs.getString(2) : "-")
-                    +((rs.getString(3) != null) ? rs.getString(3) : "-");
-                System.out.println("!!! while " + staffTxt);
+                System.out.println("Staff Debug" + staffTxt);
                 contactStaffText.setText(staffTxt);
+                //metroText.setText(metroTxt);
+                while (rs.next()) {
+//                metroTxt=(rs.getString(1)!=null)?rs.getString(1):"-";
+                    staffTxt += "," + ((rs.getString(1) != null) ? rs.getString(1) : "-") + " " + ((rs.getString(2) != null) ? rs.getString(2) : "-")
+                            + ((rs.getString(3) != null) ? rs.getString(3) : "-");
+                    System.out.println("!!! while " + staffTxt);
+                    contactStaffText.setText(staffTxt);
 
-                //metroText.setText(metroText.getText()+", "+ ((rs.getString(1)!=null)?rs.getString(1):"-" ));
+                    //metroText.setText(metroText.getText()+", "+ ((rs.getString(1)!=null)?rs.getString(1):"-" ));
+                }
             }
-        }
             pstm = con.prepareStatement("SELECT m.metroName  FROM room r\n"
                     + "left JOIN condo c ON\n"
                     + "r.condoId = c.condoId\n"

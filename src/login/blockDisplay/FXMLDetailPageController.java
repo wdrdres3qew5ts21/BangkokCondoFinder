@@ -59,6 +59,8 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
     private JFXButton backButton;
     private FXMLLoader paginationCallBack;//บันทึก Object ของ Pagination เอาไว้เพื่อจะได้ย้อนหน้ากลับไปได้
     Connection con = MyConnection.getConnection();
+    @FXML
+    private AnchorPane anchorBackButton;
 
     /**
      * Initializes the controller class.
@@ -81,18 +83,19 @@ public class FXMLDetailPageController extends FXMLLoginController implements Ini
                 latestView = "v0000";
                 System.out.println("first time view");
             }
-            java.util.Date dt = new java.util.Date();
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String currentTime = sdf.format(dt);
+//            java.util.Date dt = new java.util.Date();
+//            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            String currentTime = sdf.format(dt);
             //System.out.println(currentTime);
-            String sql = "INSERT INTO view VALUES (?,?,?,?);";
+            String sql = "INSERT INTO view VALUES (?,?,?,?,?)";
             pstm = con.prepareStatement(sql);
             pstm.setString(1, latestView);
             pstm.setString(2, sqlRoomId);
             long millis = System.currentTimeMillis();
             java.sql.Date date = new java.sql.Date(millis);
-            pstm.setDate(3, date); 
-            pstm.setString(4,(isLoginStatus()==true)?getUserId():null);//เช็คลำดับว่าใครมันเข้ามาดูในระบบ
+            pstm.setString(3, sqlCondoId);
+            pstm.setDate(4, date); 
+            pstm.setString(5,(isLoginStatus()==true)?getUserId():null);//เช็คลำดับว่าใครมันเข้ามาดูในระบบ
             pstm.executeUpdate();
             //ดึงข้อมูลจากระบบมาเขียน
             System.out.println("SQL Room " + sqlRoomId);

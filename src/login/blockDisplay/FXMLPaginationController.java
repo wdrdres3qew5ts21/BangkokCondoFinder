@@ -159,7 +159,7 @@ public class FXMLPaginationController extends FXMLLoginController implements Ini
                     //((Label) (tempGrid.getChildren().get(4))).setText(rs.getString(2));
                     //System.out.println("WTF Test 6 ! " + tempGrid.getChildren().get(5));
                     //System.out.println(((Text) (tempGrid.getChildren().get(5))).wrappingWidthProperty());
-                    String detailSet = rs.getString("detail");
+                    String detailSet = (rs.getString("detail")!=null)?rs.getString("detail"):"-";
                     detailSet = (detailSet.length() > 185) ? detailSet.substring(0, 185) + " [More...]" : detailSet;
                     ((Text) (tempGrid.getChildren().get(5))).setText(detailSet);
                     InputStream in = null;

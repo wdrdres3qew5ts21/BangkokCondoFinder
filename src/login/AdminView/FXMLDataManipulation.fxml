@@ -1,69 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" styleClass="jfx-tab-pane" stylesheets="@../GraphicCss.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.AdminView.FXMLDataManipulationController">
-   <tabs>
-      <Tab text="Condo Manage">
-         <content>
-            <ScrollPane fx:id="condoScrollPane" prefHeight="200.0" prefWidth="200.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.AdminView.FXMLDataManipulationController">
+   <children>
+      <JFXTabPane layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="520.0" styleClass="jfx-tab-pane" stylesheets="@../GraphicCss.css">
+         <tabs>
+            <Tab fx:id="condoTab" onSelectionChanged="#condoSelectedTab" text="Condo Manage">
                <content>
-                  <TableView fx:id="condoTable" prefHeight="327.0" prefWidth="515.0">
-                    <columns>
-                      <TableColumn fx:id="condoIdColumn" prefWidth="75.0" text="CondoID" />
-                      <TableColumn fx:id="condoNameColumn" prefWidth="75.0" text="CondoName" />
-                        <TableColumn fx:id="areaColumn" prefWidth="75.0" text="Area" />
-                        <TableColumn fx:id="parkingColumn" prefWidth="75.0" text="Parking" />
-                        <TableColumn fx:id="swimmingColumn" prefWidth="75.0" text="Swimming" />
-                        <TableColumn fx:id="fitnessColumn" prefWidth="75.0" text="Fitness" />
-                    </columns>
-                  </TableView>
+                  <ScrollPane fx:id="condoScrollPane" onMouseClicked="#condoTableOnClick" prefHeight="311.0" prefWidth="520.0">
+                     <content>
+                        <TableView fx:id="condoTable" onMouseClicked="#condoTableOnClick" prefHeight="327.0" prefWidth="515.0">
+                           <columns>
+                              <TableColumn fx:id="condoIdColumn" prefWidth="75.0" text="CondoID" />
+                              <TableColumn fx:id="condoNameColumn" prefWidth="75.0" text="CondoName" />
+                              <TableColumn fx:id="areaColumn" prefWidth="75.0" text="Area" />
+                              <TableColumn fx:id="parkingColumn" prefWidth="75.0" text="Parking" />
+                              <TableColumn fx:id="swimmingColumn" prefWidth="75.0" text="Swimming" />
+                              <TableColumn fx:id="fitnessColumn" prefWidth="75.0" text="Fitness" />
+                           </columns>
+                        </TableView>
+                     </content>
+                  </ScrollPane>
                </content>
-            </ScrollPane>
-         </content>
-      </Tab>
-      <Tab text="Staff Manage">
-         <content>
-            <ScrollPane fx:id="staffManageScrollPane" prefHeight="200.0" prefWidth="200.0">
+            </Tab>
+            <Tab fx:id="staffTab" onSelectionChanged="#staffSelectedTab" text="Staff Manage">
                <content>
-                  <TableView fx:id="staffTable" prefHeight="327.0" prefWidth="515.0">
-                     <columns>
-                        <TableColumn fx:id="staffIdColumn1" prefWidth="75.0" text="StaffID" />
-                        <TableColumn fx:id="condoNameColumn1" prefWidth="75.0" text="CondoName" />
-                        <TableColumn fx:id="areaColumn1" prefWidth="75.0" text="Area" />
-                        <TableColumn fx:id="parkingColumn1" prefWidth="75.0" text="Parking" />
-                        <TableColumn fx:id="swimmingColumn1" prefWidth="75.0" text="Swimming" />
-                        <TableColumn fx:id="fitnessColumn1" prefWidth="75.0" text="Fitness" />
-                     </columns>
-                  </TableView>
-               </content></ScrollPane>
-         </content>
-      </Tab>
-      <Tab text="Room Manage">
-         <content>
-            <ScrollPane fx:id="roomManageScrollPane" prefHeight="200.0" prefWidth="200.0">
+                  <ScrollPane fx:id="staffManageScrollPane" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <TableView fx:id="staffTable" onMouseClicked="#staffTableOnClick" prefHeight="327.0" prefWidth="515.0">
+                           <columns>
+                              <TableColumn fx:id="staffIdColumn1" prefWidth="75.0" text="StaffID" />
+                              <TableColumn fx:id="condoNameColumn1" prefWidth="75.0" text="FirstName" />
+                              <TableColumn fx:id="areaColumn1" prefWidth="75.0" text="LastName" />
+                              <TableColumn fx:id="parkingColumn1" prefWidth="75.0" text="Parking" />
+                              <TableColumn fx:id="swimmingColumn1" prefWidth="75.0" text="Swimming" />
+                              <TableColumn fx:id="fitnessColumn1" prefWidth="75.0" text="Fitness" />
+                           </columns>
+                        </TableView>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+            <Tab fx:id="roomTab" onSelectionChanged="#roomSelectedTab" text="Room Manage">
                <content>
-                  <TableView fx:id="roomTable" prefHeight="327.0" prefWidth="515.0">
-                     <columns>
-                        <TableColumn fx:id="roomIdColumn" prefWidth="75.0" text="RoomId" />
-                        <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
-                        <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
-                        <TableColumn fx:id="bedroomColumn" prefWidth="75.0" text="Bedroom" />
-                        <TableColumn fx:id="bathroomColumn" prefWidth="75.0" text="Bathroom" />
-                        <TableColumn fx:id="sqMeterColumn" prefWidth="75.0" text="SqMeters" />
-                     </columns>
-                  </TableView>
-               </content></ScrollPane>
-         </content>
-      </Tab>
-      <Tab text="View Chart">
-         <content>
-            <ScrollPane fx:id="viewChartManageScrollPane" prefHeight="200.0" prefWidth="200.0" />
-         </content>
-      </Tab>
-   </tabs>
-</JFXTabPane>
+                  <ScrollPane fx:id="roomManageScrollPane" prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <TableView fx:id="roomTable" onMouseClicked="#roomTableOnClick" prefHeight="327.0" prefWidth="515.0">
+                           <columns>
+                              <TableColumn fx:id="roomIdColumn" prefWidth="75.0" text="RoomId" />
+                              <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
+                              <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
+                              <TableColumn fx:id="bedroomColumn" prefWidth="75.0" text="Bedroom" />
+                              <TableColumn fx:id="bathroomColumn" prefWidth="75.0" text="Bathroom" />
+                              <TableColumn fx:id="sqMeterColumn" prefWidth="75.0" text="SqMeters" />
+                           </columns>
+                        </TableView>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+            <Tab fx:id="viewTab" text="View Chart">
+               <content>
+                  <ScrollPane fx:id="viewChartManageScrollPane" prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+      <JFXButton fx:id="insertButton" buttonType="RAISED" layoutX="290.0" layoutY="366.0" onAction="#insertButtonOnClick" style="-fx-background-color: #dd492e;" text="Insert" textFill="WHITE" />
+      <JFXButton fx:id="updateButton" buttonType="RAISED" layoutX="360.0" layoutY="366.0" onAction="#updateButtonOnClick" style="-fx-background-color: #dd492e;" text="Update" textFill="WHITE" />
+      <JFXButton fx:id="deleteButton" buttonType="RAISED" layoutX="432.0" layoutY="366.0" onAction="#deleteButtonOnClick" style="-fx-background-color: #dd492e;" text="Delete" textFill="WHITE" />
+      <Label fx:id="idLabel" layoutX="28.0" layoutY="370.0" prefHeight="17.0" prefWidth="51.0" text="CondoID" />
+      <JFXTextField fx:id="idTextField" layoutX="87.0" layoutY="366.0" prefHeight="25.0" prefWidth="165.0" />
+   </children>
+</AnchorPane>

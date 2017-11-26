@@ -9,8 +9,6 @@ package DataBaseORM;
  *
  * @author Ivora
  */
-public class Staff {
-    private String name,lastName,city,address;
-    private int age;
-    private double salary;
+public class Staff extends User{
+    
 }

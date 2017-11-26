@@ -229,10 +229,16 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private void insertButtonOnClick(ActionEvent event) {
         System.out.println(checkTab);
-        //pstm = con.prepareStatement("");
+       
         if(validSelectTab()==true){
             //เช็คต่อว่ากำลังทำงานของ Tab ไหน
             if(checkTab.equals("room")){
+                
+            }
+            else if(checkTab.equals("condo")){
+                
+            }
+            else if(checkTab.equals("staff")){
                 
             }
         }
@@ -242,7 +248,16 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private void updateButtonOnClick(ActionEvent event) {
         if(validSelectTab()==true){
-            
+            //เช็คต่อว่ากำลังทำงานของ Tab ไหน
+            if(checkTab.equals("room")){
+                
+            }
+            else if(checkTab.equals("condo")){
+                
+            }
+            else if(checkTab.equals("staff")){
+                
+            }
         }
     }
 
@@ -250,6 +265,16 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     private void deleteButtonOnClick(ActionEvent event) {
         if(validSelectTab()==true){
             //implement 
+            //เช็คต่อว่ากำลังทำงานของ Tab ไหน
+            if(checkTab.equals("room")){
+                
+            }
+            else if(checkTab.equals("condo")){
+                
+            }
+            else if(checkTab.equals("staff")){
+                
+            }
         }
     }
 

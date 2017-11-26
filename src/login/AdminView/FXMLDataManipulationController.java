@@ -7,15 +7,18 @@ package login.AdminView;
 
 import DataBaseORM.Condo;
 import DataBaseORM.Room;
+import DataBaseORM.Staff;
 import LoginPermission.MyConnection;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,8 +27,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SortEvent;
@@ -34,6 +39,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import login.FXMLLoginController;
@@ -73,19 +79,7 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private TableColumn<Condo, String> fitnessColumn;
     @FXML
-    private TableView<?> staffTable;
-    @FXML
-    private TableColumn<?, ?> staffIdColumn1;
-    @FXML
-    private TableColumn<?, ?> condoNameColumn1;
-    @FXML
-    private TableColumn<?, ?> areaColumn1;
-    @FXML
-    private TableColumn<?, ?> parkingColumn1;
-    @FXML
-    private TableColumn<?, ?> swimmingColumn1;
-    @FXML
-    private TableColumn<?, ?> fitnessColumn1;
+    private TableView<Staff> staffTable;
     @FXML
     private TableColumn<Room, String> roomIdColumn;
     @FXML
@@ -120,6 +114,20 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     Alert alert = new Alert(Alert.AlertType.WARNING);
     @FXML
     private JFXTextField idTextField;
+    @FXML
+    private TableColumn<Staff, String> firstNameColumn;
+    @FXML
+    private TableColumn<Staff, String> lastNameColumn;
+    @FXML
+    private TableColumn<Staff, String> reportToColumn;
+    private TableColumn<Staff, String> bossNameColumn;
+    private TableColumn<Staff, String> bossLastNameColumn;
+    @FXML
+    private TableColumn<Staff, String> staffIdColumn;
+    @FXML
+    private TableColumn<Staff, String> cityColumn;
+    @FXML
+    private TableColumn<Staff, String> positionColumn;
 
     /**
      * Initializes the controller class.
@@ -128,6 +136,9 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //Alert Dialog กรณีเลือก Tab Update ผิด
+        if (idLabel == null) {
+            System.out.println("sdfsdfs!!!! fuuu ID Label null");
+        }
         alert.initStyle(StageStyle.UNDECORATED);
         alert.setTitle("Empty Field!");
 
@@ -148,8 +159,42 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
         bedroomColumn.setCellValueFactory(new PropertyValueFactory<Room, Integer>("bedroom"));
         bathroomColumn.setCellValueFactory(new PropertyValueFactory<Room, Integer>("bathroom"));
         sqMeterColumn.setCellValueFactory(new PropertyValueFactory<Room, Integer>("sqMeter"));
+        //---------------- set user
+        staffTable.setEditable(true);
+        staffIdColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("staffId"));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("lastName"));
+        cityColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("city"));
+        reportToColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("reportTo"));
+        positionColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("position"));
         loadManageCondo();
         loadManageRoom();
+        loadManageStaff();
+    }
+
+    public void loadManageStaff() {
+        staffTable.getItems().addAll(getStaff());
+    }
+
+    public ObservableList<Staff> getStaff() {
+        ObservableList<Staff> staff = FXCollections.observableArrayList();
+        try {
+            pstm = con.prepareStatement("SELECT s.staffId,u.firstName,u.firstName,a.city,s.reportTo,p.nPosition\n"
+                    + "FROM staff s\n"
+                    + "left JOIN user u ON u.userId=s.staffId\n"
+                    + "left JOIN position p ON s.positionId = p.positionId\n"
+                    + "left JOIN area a ON s.areaId = a.areaId\n"
+                    + "ORDER BY 1");
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                System.out.println("table Condo ---");
+                staff.add(new Staff(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return staff;
     }
 
     public void loadManageRoom() {
@@ -196,32 +241,34 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
         }
         return condos;
     }
-    boolean firstTime=true;
+    boolean firstTime = true;
+
     @FXML
     private void condoSelectedTab(Event event) {
         checkTab = "condo";
-        idLabel.setText(checkTab.toUpperCase()+"ID");
+        if (idLabel == null) {
+            System.out.println("dfsd!!!! Null uuuuuuuuuuuuu");
+        }
+        if (firstTime == true) {
+            idLabel.setText(checkTab.toUpperCase() + "ID");
+            firstTime = false;
+        } else {
+            idLabel.setText(checkTab.toUpperCase() + "ID");
+        }
+
         System.out.println(checkTab);
-//        if(firstTime==true){
-//            firstTime=false;
-//        }
-//        sle{
-//        System.out.println("Sorry for Inconvinince ! Maintenance");
-//        alert.setHeaderText("Invalid Input !!!");
-//        alert.setContentText("Now you in " + checkTab.toUpperCase() + " Please Input ID that need to be Cxxxx only");
-//        alert.showAndWait();
     }
 
     @FXML
     private void staffSelectedTab(Event event) {
         checkTab = "staff";
-        idLabel.setText(checkTab.toUpperCase()+"ID");
+        idLabel.setText(checkTab.toUpperCase() + "ID");
     }
 
     @FXML
     private void roomSelectedTab(Event event) {
         checkTab = "room";
-        idLabel.setText(checkTab.toUpperCase()+"ID");
+        idLabel.setText(checkTab.toUpperCase() + "ID");
 
         System.out.println(checkTab);
     }
@@ -229,17 +276,15 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private void insertButtonOnClick(ActionEvent event) {
         System.out.println(checkTab);
-       
-        if(validSelectTab()==true){
+
+        if (validSelectTab() == true) {
             //เช็คต่อว่ากำลังทำงานของ Tab ไหน
-            if(checkTab.equals("room")){
-                
-            }
-            else if(checkTab.equals("condo")){
-                
-            }
-            else if(checkTab.equals("staff")){
-                
+            if (checkTab.equals("room")) {
+
+            } else if (checkTab.equals("condo")) {
+
+            } else if (checkTab.equals("staff")) {
+
             }
         }
 
@@ -247,33 +292,59 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
 
     @FXML
     private void updateButtonOnClick(ActionEvent event) {
-        if(validSelectTab()==true){
+        boolean isInsert = false;
+        if (validSelectTab() == true) {
             //เช็คต่อว่ากำลังทำงานของ Tab ไหน
-            if(checkTab.equals("room")){
-                
-            }
-            else if(checkTab.equals("condo")){
-                
-            }
-            else if(checkTab.equals("staff")){
-                
+            if (checkTab.equals("room")) {
+                FXMLLoader roomFXML = new FXMLLoader(FXMLDataManipulationController.class.getResource("MainWindowView.fxml"));
+                // roomFXML.setLocation();
+                // FXMLRoomFormController roomController=new FXMLRoomFormController();
+                // roomFXML.setController(roomController);
+
+                //JFXDialogLayout popup=condoFXML.load();
+                try {
+                    AnchorPane condoPopup = roomFXML.load();
+
+                    System.out.println("adfdsfds" + condoPopup.toString());
+                    mainView.setCenter(condoPopup);
+                    System.out.println("success!!");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (checkTab.equals("condo")) {
+
+            } else if (checkTab.equals("staff")) {
+
             }
         }
     }
 
     @FXML
     private void deleteButtonOnClick(ActionEvent event) {
-        if(validSelectTab()==true){
+        if (validSelectTab() == true) {
             //implement 
             //เช็คต่อว่ากำลังทำงานของ Tab ไหน
-            if(checkTab.equals("room")){
-                
-            }
-            else if(checkTab.equals("condo")){
-                
-            }
-            else if(checkTab.equals("staff")){
-                
+            if (checkTab.equals("room")) {
+
+            } else if (checkTab.equals("condo")) {
+
+            } else if (checkTab.equals("staff")) {
+                String staffId = idTextField.getText();
+                if (!(staffId.isEmpty() | staffId == null)) {
+                    staffTable.getItems().clear();
+                    try {
+                        pstm = con.prepareStatement("DELETE FROM staff WHERE staffId=?");
+                        pstm.setString(1, staffId);
+                        pstm.executeUpdate();
+                        staffTable.getItems().clear();
+                        loadManageStaff();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FXMLDataManipulationController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
             }
         }
     }
@@ -281,7 +352,7 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     public boolean validSelectTab() {
         boolean isValid = false;
         if (checkTab.equalsIgnoreCase("staff")) {
-            if (idLabel.getText().charAt(0) == 's') {
+            if (idTextField.getText().charAt(0) == 's') {
                 isValid = true;
             } else {
                 //alrt wrong input
@@ -291,7 +362,7 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
             }
 
         } else if (checkTab.equalsIgnoreCase("room")) {
-            if (idLabel.getText().charAt(0) == 'r') {
+            if (idTextField.getText().charAt(0) == 'r') {
                 isValid = true;
 
             } else {
@@ -301,7 +372,7 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
                 alert.showAndWait();
             }
         } else if (checkTab.equalsIgnoreCase("condo")) {
-            if (idLabel.getText().charAt(0) == 'c') {
+            if (idTextField.getText().charAt(0) == 'c') {
                 isValid = true;
             } else {
                 //alrt wrong input
@@ -316,21 +387,17 @@ public class FXMLDataManipulationController extends FXMLLoginController implemen
     @FXML
     private void roomTableOnClick(MouseEvent event) {
         idTextField.setText(roomTable.getSelectionModel().getSelectedItem().getRoomId());
-        
+
     }
 
     @FXML
     private void condoTableOnClick(MouseEvent event) {
-         idTextField.setText(condoTable.getSelectionModel().getSelectedItem().getCondoId());
+        idTextField.setText(condoTable.getSelectionModel().getSelectedItem().getCondoId());
     }
 
     @FXML
     private void staffTableOnClick(MouseEvent event) {
-        idTextField.setText(staffTable.getSelectionModel().getSelectedItem().toString());
+        idTextField.setText(staffTable.getSelectionModel().getSelectedItem().getStaffId());
     }
-
-   
-
- 
 
 }

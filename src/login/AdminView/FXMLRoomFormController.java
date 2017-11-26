@@ -20,13 +20,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import login.FXMLLoginController;
 
 /**
  * FXML Controller class
  *
  * @author Ivora
  */
-public class FXMLRoomFormController implements Initializable {
+public class FXMLRoomFormController extends FXMLLoginController implements Initializable {
 
     @FXML
     private TextField bathroomTextField;
@@ -53,20 +54,24 @@ public class FXMLRoomFormController implements Initializable {
     boolean isInsert = true;
     private PreparedStatement pstm = null;
     private ResultSet rs;
+    public FXMLRoomFormController(){
+        
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
-        try {
-            pstm = con.prepareStatement("select DISTINCT condoName from condo");
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                condoNameTextField.getItems().add(rs.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLRoomFormController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
+//
+//        try {
+//            pstm = con.prepareStatement("select DISTINCT condoName from condo");
+//            rs = pstm.executeQuery();
+//            while (rs.next()) {
+//                condoNameTextField.getItems().add(rs.getString(1));
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(FXMLRoomFormController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 
@@ -80,12 +85,16 @@ public class FXMLRoomFormController implements Initializable {
         
         if (isInsert == true) {//insert
             try {
-                pstm = con.prepareStatement("");
+                pstm = con.prepareStatement("insert in to");
             } catch (SQLException ex) {
                 Logger.getLogger(FXMLRoomFormController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {//update
-
+            try {
+                pstm = con.prepareStatement("insert in to");
+            } catch (SQLException ex) {
+                Logger.getLogger(FXMLRoomFormController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

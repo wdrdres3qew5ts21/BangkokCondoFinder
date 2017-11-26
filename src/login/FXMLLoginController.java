@@ -304,15 +304,16 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
                         //mainView.getLeft().setVisible(false);
                         FXMLLoader fxmlAdmin = new FXMLLoader();
                         fxmlAdmin.setLocation(FXMLLoginController.class.getResource("AdminView/FXMLDataManipulation.fxml"));
-                        AnchorPane adminTabPane = null;
+                        
                         try {
-                            adminTabPane = fxmlAdmin.load();
+                            AnchorPane adminTabPane = fxmlAdmin.load();
+                         
                             mainView.setCenter(adminTabPane);
                             
                         } catch (IOException ex) {
                             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        mainView.setCenter(adminTabPane);
+                        
                         
                     }
                 } else {

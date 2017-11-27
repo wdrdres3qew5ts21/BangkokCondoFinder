@@ -76,6 +76,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import javax.swing.JButton;
+import login.LeftSearchBar.FXMLLeftSearchBarController;
 import login.blockDisplay.FXMLPaginationController;
 
 /**
@@ -116,8 +117,14 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
         try {
             // TODO
             // callHome();
-
-            mainView.setLeft(FXMLLoader.load(getClass().getResource("LeftSearchBar/FXMLLeftSearchBar.fxml")));
+            FXMLLoader fxmlLeft=new FXMLLoader();
+            fxmlLeft.setLocation(FXMLLoginController.class.getResource("LeftSearchBar/FXMLLeftSearchBar.fxml"));
+            FXMLLeftSearchBarController leftController=new FXMLLeftSearchBarController();
+            leftController.setMainView(this);
+            fxmlLeft.setController(leftController);
+            GridPane leftGrid=fxmlLeft.load();
+            mainView.setLeft(leftGrid);
+            
             legacyMainView = mainView;//ยัดค่า mainView ลงนี้เพื่อ backup
         } catch (IOException ex) {
             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);

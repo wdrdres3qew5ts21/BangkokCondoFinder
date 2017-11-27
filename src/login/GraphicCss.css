@@ -19,8 +19,9 @@
 }
 
 .middle-bgimage{
-    -fx-background-image: url("https://www.segalization.com/wp-content/uploads/2017/03/Valkyria-Revolution-and-Blue-Reflection-1080P-Wallpaper.jpg");	
+    -fx-background-image: url("https://q-ak.bstatic.com/images/hotel/max1024x768/933/93377720.jpg");	
     -fx-background-size: cover;
+     -fx-filter:blur(20);
 }
 
 .bgblue {

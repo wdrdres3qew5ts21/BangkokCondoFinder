@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import login.FXMLLoginController;
@@ -31,7 +32,7 @@ import login.FXMLLoginController;
  * @author Ivora
  */
 public class FXMLLeftSearchBarController extends FXMLLoginController implements Initializable {
-
+    private FXMLLoginController controlSearch=null;
     Connection con = MyConnection.getConnection();
     PreparedStatement pstm = null;
     @FXML
@@ -173,7 +174,7 @@ public class FXMLLeftSearchBarController extends FXMLLoginController implements 
         beginPrice = Integer.parseInt(minField.getText());
         maxPrice = Integer.parseInt(maxField.getText());
   
-        leftSearchBar(area, metro, bedroom, beginPrice, maxPrice, type);
+        this.controlSearch.leftSearchBar(area, metro, bedroom, beginPrice, maxPrice, type);
     }
 
     @FXML
@@ -194,6 +195,10 @@ public class FXMLLeftSearchBarController extends FXMLLoginController implements 
             Logger.getLogger(FXMLLeftSearchBarController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void setMainView(FXMLLoginController mainView) {
+        this.controlSearch=mainView;
     }
 
 }

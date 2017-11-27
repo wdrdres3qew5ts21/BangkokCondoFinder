@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-
-<GridPane fx:id="leftSearchBar" prefHeight="329.0" prefWidth="200.0" style="-fx-background-color: #c64c23;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LeftSearchBar.FXMLLeftSearchBarController">
+<!--fx:controller="login.LeftSearchBar.FXMLLeftSearchBarController"-->
+<GridPane fx:id="leftSearchBar" prefHeight="329.0" prefWidth="200.0" style="-fx-background-color: #c64c23;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" >
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.66663360595703" minWidth="10.0" prefWidth="92.99997965494792" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.33335367838542" minWidth="10.0" prefWidth="106.33335367838542" />

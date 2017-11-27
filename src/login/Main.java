@@ -35,7 +35,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Condo Luxury");
+        primaryStage.setTitle("BangkokCondoFinder");
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("image/appicon.png")));
         primaryStage.show();
         

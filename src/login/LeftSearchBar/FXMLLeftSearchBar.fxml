@@ -2,9 +2,9 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -57,10 +57,10 @@
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(150, 51, 18);" GridPane.columnSpan="2" GridPane.rowIndex="6">
          <children>
             <JFXButton buttonType="RAISED" layoutX="100.0" layoutY="58.0" onAction="#findPropertyOnclick" prefHeight="25.0" prefWidth="89.0" style="-fx-background-color: #c64c23;" text="Find Property" textFill="#f7f5f5" />
-            <Slider fx:id="maxSlider" layoutX="46.0" layoutY="35.0" />
-            <Slider fx:id="minSlider" layoutX="46.0" layoutY="7.0" />
             <Label layoutX="14.0" layoutY="6.0" text="MIN" textFill="#fffdfd" />
             <Label layoutX="13.0" layoutY="34.0" text="MAX" textFill="WHITE" />
+            <JFXTextField fx:id="minField" layoutX="52.0" prefHeight="17.0" prefWidth="135.0" />
+            <JFXTextField fx:id="maxField" layoutX="52.0" layoutY="24.0" />
          </children>
       </Pane>
       <JFXComboBox fx:id="areaComboBox" onAction="#areaComboOnClick" prefWidth="80.0" promptText="    --Any--" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">

@@ -47,7 +47,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import login.FXMLLoginController;
-import org.controlsfx.control.CheckComboBox;
 
 /**
  * FXML Controller class

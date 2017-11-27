@@ -93,6 +93,7 @@ public class FXMLPaginationController extends FXMLLoginController implements Ini
         //จำนวนของหน้าก็คือขึ้นกับสูตรของ content ที่เราตั้งเอาไว้เช่นมีหน้านึงมี 5 ข้อมูลแสดงว่าต้อง หารด้วย 5 แล้วปัดขึ้น
         //ตัวอย่างการทำงานเช่น 3/5 =0.xx เราก็ปัดขึ้นเป็น 1 เราจะได้มา 1 หน้า
         int numberOfPage = 0;
+        System.out.println("DEbug Load by finding");
         try {
             //เราาต้อง reuse code ตรงนี้คือหมายความว่ามีการใช้ method ซ้ำได้
             pstm = con.prepareStatement(sqlCountContentNumber);
@@ -138,28 +139,31 @@ public class FXMLPaginationController extends FXMLLoginController implements Ini
                 FXMLLoader fxmlGrid = new FXMLLoader();
                 fxmlGrid.setLocation(FXMLPaginationController.class.getResource("FXMLBlockDisplay.fxml"));
                 FXMLBlockDisplayController blockController = new FXMLBlockDisplayController();
-                blockController.setSqlCondoRoomId(rs.getString("roomId"));
-                blockController.setSqlCondoId(rs.getString("condoId"));
+//                blockController.setSqlCondoRoomId(rs.getString("roomId"));
+//                blockController.setSqlCondoId(rs.getString("condoId"));
+                System.out.println(rs.getString("r.roomId") + " //CondoID " + rs.getString("r.condoId"));
+                blockController.setSqlCondoRoomId(rs.getString("r.roomId"));
+                blockController.setSqlCondoId(rs.getString("r.condoId"));
                 fxmlGrid.setController(blockController);
                 //GridPane tempGrid = FXMLLoader.load(getClass().getResource("FXMLBlockDisplay.fxml"));
                 GridPane tempGrid = fxmlGrid.load();
                 try {
                     //ดึงข้อมูลจาก database มาเขียนีั            
                     System.out.println("WTF Test 1 ! ");
-                    ((Label) (tempGrid.getChildren().get(0))).setText((rs.getDouble("r.price")!=0.0)?rs.getDouble("r.price")+"":"-");
+                    ((Label) (tempGrid.getChildren().get(0))).setText((rs.getDouble("r.price") != 0.0) ? rs.getDouble("r.price") + "" : "-");
                     System.out.println("WTF Test 2 ! " + tempGrid.getChildren().get(1));
-                    ((Label) (tempGrid.getChildren().get(1))).setText((rs.getString("city")!=null)?rs.getString("city"):"-");
+                    ((Label) (tempGrid.getChildren().get(1))).setText((rs.getString("city") != null) ? rs.getString("city") : "-");
                     System.out.println("WTF Test 3 ! " + tempGrid.getChildren().get(2));
-                    String bed=(rs.getInt("r.bedrooms") != 0) ? rs.getInt("r.bedrooms") + "" : "-";
-                    String bath=(rs.getInt("r.bathrooms") != 0) ? rs.getInt("r.bathrooms") + "" : "-";
-                    ((Label) (tempGrid.getChildren().get(2))).setText("Condo/" + bed+ "bed/" + bath + "bath");
+                    String bed = (rs.getInt("r.bedrooms") != 0) ? rs.getInt("r.bedrooms") + "" : "-";
+                    String bath = (rs.getInt("r.bathrooms") != 0) ? rs.getInt("r.bathrooms") + "" : "-";
+                    ((Label) (tempGrid.getChildren().get(2))).setText("Condo/" + bed + "bed/" + bath + "bath");
                     System.out.println("WTF Test 4 ! " + tempGrid.getChildren().get(3));//ราคาเช่าต่อเดือน
                     // ((Label) (tempGrid.getChildren().get(3))).setText(rs.getString(2));//ราคาเช่าต่อเดือน
                     //System.out.println("WTF Test 5 ! " + tempGrid.getChildren().get(4));
                     //((Label) (tempGrid.getChildren().get(4))).setText(rs.getString(2));
                     //System.out.println("WTF Test 6 ! " + tempGrid.getChildren().get(5));
                     //System.out.println(((Text) (tempGrid.getChildren().get(5))).wrappingWidthProperty());
-                    String detailSet = (rs.getString("detail")!=null)?rs.getString("detail"):"-";
+                    String detailSet = (rs.getString("detail") != null) ? rs.getString("detail") : "-";
                     detailSet = (detailSet.length() > 185) ? detailSet.substring(0, 185) + " [More...]" : detailSet;
                     ((Text) (tempGrid.getChildren().get(5))).setText(detailSet);
                     InputStream in = null;

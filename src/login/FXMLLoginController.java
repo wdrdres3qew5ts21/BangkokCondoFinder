@@ -84,6 +84,7 @@ import login.blockDisplay.FXMLPaginationController;
  */
 public class FXMLLoginController extends LoginPermission implements Initializable {
 
+    public String leftSqlSearch = "";
     private String currentPage = "home";
     private final double IMG_WIDTH = 600;
     private final double IMG_HEIGHT = 300;
@@ -137,6 +138,215 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
         currentPage = "home";
         //callHome();
         //  mainView.setStyle("-fx-background-image: url(\"http://gematsu.com/wp-content/uploads/2016/12/Blue-Reflection-Christmas-2016-Wallpaper.jpg\");");
+
+    }
+
+    public void leftSearchBar(String area, String metro, int bedroom, int minPrice, int maxPrice, String type) {
+        FXMLLoader fxmlAll = new FXMLLoader();
+        fxmlAll.setLocation(FXMLLoginController.class.getResource("blockDisplay/FXMLPagination.fxml"));
+        FXMLPaginationController allController = new FXMLPaginationController();
+        System.out.println("Count Content todisplay LeftBAr!!!");
+        if (!type.equals("'_%'")) {
+            System.out.println("SELECT  count(*) FROM room r\n"
+                    + "left JOIN condo c ON\n"
+                    + "r.condoId = c.condoId\n"
+                    + "left JOIN area a ON\n"
+                    + "c.areaId = a.areaId\n"
+                    + "left JOIN roomType t ON\n"
+                    + "r.typeId = t.typeId\n"
+                    + "left join metro m ON\n"
+                    + "a.areaId = m.areaId\n"
+                    + "left JOIN picture p ON\n"
+                    + "r.picId=p.picId\n"
+                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n"
+                    + "AND t.nType=" + type);
+            System.out.println("--------------------------------------------------------------------");
+            allController.setSqlCountContentNumber("SELECT  count(*) r\n"
+                    + "left JOIN condo c ON\n"
+                    + "r.condoId = c.condoId\n"
+                    + "left JOIN area a ON\n"
+                    + "c.areaId = a.areaId\n"
+                    + "left JOIN roomType t ON\n"
+                    + "r.typeId = t.typeId\n"
+                    + "left join metro m ON\n"
+                    + "a.areaId = m.areaId\n"
+                    + "left JOIN picture p ON\n"
+                    + "r.picId=p.picId\n"
+                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n"
+                    + "AND t.nType=" + type);
+            System.out.println("Content todisplay LeftBAr!!!");
+            allController.setSqlContentToDisplay("SELECT  * FROM room r\n"
+                    + "left JOIN condo c ON\n"
+                    + "r.condoId = c.condoId\n"
+                    + "left JOIN area a ON\n"
+                    + "c.areaId = a.areaId\n"
+                    + "left JOIN roomType t ON\n"
+                    + "r.typeId = t.typeId\n"
+                    + "left join metro m ON\n"
+                    + "a.areaId = m.areaId\n"
+                    + "left JOIN picture p ON\n"
+                    + "r.picId=p.picId\n"
+                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n"
+                    + "AND t.nType=" + type);
+            System.out.println("Left Search Passs!!!");
+            fxmlAll.setController(allController);
+        } else {
+            System.out.println("All item");
+            System.out.println("SELECT  count(*) FROM room r\n"
+                + "left JOIN condo c ON\n"
+                + "r.condoId = c.condoId\n"
+                + "left JOIN area a ON\n"
+                + "c.areaId = a.areaId\n"
+                + "left JOIN roomType t ON\n"
+                + "r.typeId = t.typeId\n"
+                + "left join metro m ON\n"
+                + "a.areaId = m.areaId\n"
+                + "left JOIN picture p ON\n"
+                + "r.picId=p.picId\n"
+                + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+                + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n");
+            System.out.println("-------------------------------------------------------------------");
+            allController.setSqlCountContentNumber("SELECT count(*) FROM room r\n"
+                    + "left JOIN condo c ON\n"
+                    + "r.condoId = c.condoId\n"
+                    + "left JOIN area a ON\n"
+                    + "c.areaId = a.areaId\n"
+                    + "left JOIN roomType t ON\n"
+                    + "r.typeId = t.typeId\n"
+                    + "left join metro m ON\n"
+                    + "a.areaId = m.areaId\n"
+                    + "left JOIN picture p ON\n"
+                    + "r.picId=p.picId\n"
+                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n");
+            allController.setSqlContentToDisplay("SELECT  * FROM room r\n"
+                    + "left JOIN condo c ON\n"
+                    + "r.condoId = c.condoId\n"
+                    + "left JOIN area a ON\n"
+                    + "c.areaId = a.areaId\n"
+                    + "left JOIN roomType t ON\n"
+                    + "r.typeId = t.typeId\n"
+                    + "left join metro m ON\n"
+                    + "a.areaId = m.areaId\n"
+                    + "left JOIN picture p ON\n"
+                    + "r.picId=p.picId\n"
+                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n");
+            fxmlAll.setController(allController);
+        }
+//        fxmlAll.setController(allController);
+
+        try {
+            System.out.println("Debug Main !!!!!!"+" DEbug!!!");
+            System.out.println(mainView.toString());
+            mainView.setCenter(fxmlAll.load());
+            legacyPage = (Pagination) mainView.getCenter();
+            System.out.println("Legacy DEbug" + legacyPage);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+//        FXMLLoader fxmlAll = new FXMLLoader();
+//        fxmlAll.setLocation(FXMLLoginController.class.getResource("blockDisplay/FXMLPagination.fxml"));
+//        FXMLPaginationController allController = new FXMLPaginationController();
+//        System.out.println("SELECT  count(*) FROM room r\n"
+//                + "left JOIN condo c ON\n"
+//                + "r.condoId = c.condoId\n"
+//                + "left JOIN area a ON\n"
+//                + "c.areaId = a.areaId\n"
+//                + "left JOIN roomType t ON\n"
+//                + "r.typeId = t.typeId\n"
+//                + "left join metro m ON\n"
+//                + "a.areaId = m.areaId\n"
+//                + "left JOIN picture p ON\n"
+//                + "r.picId=p.picId\n"
+//                + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+//                + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n"
+//                + "AND t.nType=" + type);
+//        System.out.println("Count Content todisplay LeftBAr!!!");
+//        if (!type.equals("'_%'")) {
+//            System.out.println("Some hing thype!!!");
+//            allController.setSqlCountContentNumber("SELECT  distinct c.condoName,r.roomId,p.picture,r.typeId,r.condoId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
+//                    + "c.parking,c.fitness,c.swimming,r.detail FROM room r\n"
+//                    + "left JOIN condo c ON\n"
+//                    + "r.condoId = c.condoId\n"
+//                    + "left JOIN area a ON\n"
+//                    + "c.areaId = a.areaId\n"
+//                    + "left JOIN roomType t ON\n"
+//                    + "r.typeId = t.typeId\n"
+//                    + "left join metro m ON\n"
+//                    + "a.areaId = m.areaId\n"
+//                    + "left JOIN picture p ON\n"
+//                    + "r.picId=p.picId\n"
+//                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+//                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n"
+//                    + "AND t.nType=" + type);
+//            System.out.println("Content todisplay LeftBAr!!!");
+//            allController.setSqlContentToDisplay("SELECT  distinct c.condoName,r.roomId,p.picture,r.typeId,r.condoId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
+//                    + "c.parking,c.fitness,c.swimming,r.detail FROM room r\n"
+//                    + "left JOIN condo c ON\n"
+//                    + "r.condoId = c.condoId\n"
+//                    + "left JOIN area a ON\n"
+//                    + "c.areaId = a.areaId\n"
+//                    + "left JOIN roomType t ON\n"
+//                    + "r.typeId = t.typeId\n"
+//                    + "left join metro m ON\n"
+//                    + "a.areaId = m.areaId\n"
+//                    + "left JOIN picture p ON\n"
+//                    + "r.picId=p.picId\n"
+//                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+//                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n"
+//                    + "AND t.nType=" + type);
+//            System.out.println("Left Search Passs!!!");
+//            fxmlAll.setController(allController);
+//        } else {
+//            System.out.println("All item");
+//            allController.setSqlCountContentNumber("SELECT count(*) FROM room r\n"
+//                    + "left JOIN condo c ON\n"
+//                    + "r.condoId = c.condoId\n"
+//                    + "left JOIN area a ON\n"
+//                    + "c.areaId = a.areaId\n"
+//                    + "left JOIN roomType t ON\n"
+//                    + "r.typeId = t.typeId\n"
+//                    + "left join metro m ON\n"
+//                    + "a.areaId = m.areaId\n"
+//                    + "left JOIN picture p ON\n"
+//                    + "r.picId=p.picId\n"
+//                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+//                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n");
+//            System.out.println("Content todisplay LeftBAr!!!");
+//            allController.setSqlContentToDisplay("SELECT  distinct c.condoName,r.roomId,p.picture,r.typeId,r.condoId,r.price,t.nType,a.city,r.bedrooms,r.bathrooms,r.sqMeters,\n"
+//                    + "c.parking,c.fitness,c.swimming,r.detail FROM room r\n"
+//                    + "left JOIN condo c ON\n"
+//                    + "r.condoId = c.condoId\n"
+//                    + "left JOIN area a ON\n"
+//                    + "c.areaId = a.areaId\n"
+//                    + "left JOIN roomType t ON\n"
+//                    + "r.typeId = t.typeId\n"
+//                    + "left join metro m ON\n"
+//                    + "a.areaId = m.areaId\n"
+//                    + "left JOIN picture p ON\n"
+//                    + "r.picId=p.picId\n"
+//                    + "WHERE a.city LIKE " + area + " AND m.metroName LIKE " + metro + " AND r.bedrooms >=" + bedroom + " AND\n"
+//                    + "r.price BETWEEN " + minPrice + " AND " + maxPrice + "\n");
+//            System.out.println("Left Search Passs!!!");
+//            fxmlAll.setController(allController);
+//        }
+////        fxmlAll.setController(allController);
+//
+//        try {
+//            mainView.setCenter(fxmlAll.load());
+//            legacyPage = (Pagination) mainView.getCenter();
+//            System.out.println("Legacy DEbug" + legacyPage);
+//        } catch (IOException ex) {
+//            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
+
+    public void loadSQLSearch() {
 
     }
 
@@ -304,17 +514,16 @@ public class FXMLLoginController extends LoginPermission implements Initializabl
                         //mainView.getLeft().setVisible(false);
                         FXMLLoader fxmlAdmin = new FXMLLoader();
                         fxmlAdmin.setLocation(FXMLLoginController.class.getResource("AdminView/FXMLDataManipulation.fxml"));
-                        
+
                         try {
                             AnchorPane adminTabPane = fxmlAdmin.load();
-                         
+
                             mainView.setCenter(adminTabPane);
-                            
+
                         } catch (IOException ex) {
                             Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                        
+
                     }
                 } else {
                     alert.setHeaderText("Fail To Authentication !");
